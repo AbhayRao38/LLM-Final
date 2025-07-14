@@ -1,0 +1,3 @@
+2025-07-08 20:09:32,428 [KnowledgeBase] INFO PDF added successfully: C:\Users\praoa\Downloads\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-08 20:09:32,433 [KnowledgeBase] INFO Use pytorch device_name: cpu
+2025-07-08 20:09:32,433 [KnowledgeBase] INFO Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2

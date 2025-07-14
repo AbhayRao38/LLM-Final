@@ -1,0 +1,116 @@
+2025-07-08 19:47:00,043 [INFO] === QuillAI Session Started ===
+2025-07-08 19:47:00,044 [INFO] User: AbhayRao38
+2025-07-08 19:47:00,044 [INFO] Arguments: {'mode': None, 'query': 'Compare supervised and unsupervised learning', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': True, 'debug': False, 'dual_output': False, 'analyze_query': True, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 19:47:00,045 [INFO] Session ID: 20250708_141700
+2025-07-08 19:51:22,259 [INFO] === QuillAI Session Started ===
+2025-07-08 19:51:22,259 [INFO] User: AbhayRao38
+2025-07-08 19:51:22,260 [INFO] Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\Downloads\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'dual_output': False, 'analyze_query': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 19:51:22,260 [INFO] Session ID: 20250708_142122
+2025-07-08 20:09:32,300 [INFO] === QuillAI Session Started ===
+2025-07-08 20:09:32,300 [INFO] User: AbhayRao38
+2025-07-08 20:09:32,300 [INFO] Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\Downloads\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:09:32,300 [INFO] Session ID: 20250708_143932
+2025-07-08 20:09:32,301 [INFO] Starting PDF addition: C:\Users\praoa\Downloads\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-08 20:10:26,685 [INFO] === QuillAI Session Started ===
+2025-07-08 20:10:26,685 [INFO] User: AbhayRao38
+2025-07-08 20:10:26,685 [INFO] Arguments: {'mode': 'learning', 'query': 'Summarize key concepts', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:10:26,685 [INFO] Session ID: 20250708_144026
+2025-07-08 20:10:26,686 [INFO] Processing query: Summarize key concepts
+2025-07-08 20:10:26,691 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:10:26,691 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:10:49,530 [INFO] === QuillAI Session Started ===
+2025-07-08 20:10:49,530 [INFO] User: AbhayRao38
+2025-07-08 20:10:49,530 [INFO] Arguments: {'mode': 'question', 'query': 'Main topics', 'marks': 5, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:10:49,530 [INFO] Session ID: 20250708_144049
+2025-07-08 20:10:49,531 [INFO] Processing query: Main topics
+2025-07-08 20:10:49,536 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:10:49,536 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:11:11,378 [INFO] === QuillAI Session Started ===
+2025-07-08 20:11:11,378 [INFO] User: AbhayRao38
+2025-07-08 20:11:11,378 [INFO] Arguments: {'mode': 'learning', 'query': 'Explain supervised learning', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:11:11,378 [INFO] Session ID: 20250708_144111
+2025-07-08 20:11:11,379 [INFO] Processing query: Explain supervised learning
+2025-07-08 20:11:11,385 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:11:11,385 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:11:37,615 [INFO] === QuillAI Session Started ===
+2025-07-08 20:11:37,615 [INFO] User: AbhayRao38
+2025-07-08 20:11:37,616 [INFO] Arguments: {'mode': None, 'query': 'Generate 10 questions about neural networks', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:11:37,616 [INFO] Session ID: 20250708_144137
+2025-07-08 20:11:37,616 [INFO] Processing query: Generate 10 questions about neural networks
+2025-07-08 20:11:37,622 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:11:37,622 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:28:28,799 [INFO] === QuillAI Session Started ===
+2025-07-08 20:28:28,799 [INFO] User: AbhayRao38
+2025-07-08 20:28:28,799 [INFO] Arguments: {'mode': 'question', 'query': 'Explain backpropagation algorithm in neural networks', 'marks': 10, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:28:28,799 [INFO] Session ID: 20250708_145828
+2025-07-08 20:28:28,800 [INFO] Processing query: Explain backpropagation algorithm in neural networks
+2025-07-08 20:28:28,806 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:28:28,806 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:28:52,451 [INFO] === QuillAI Session Started ===
+2025-07-08 20:28:52,451 [INFO] User: AbhayRao38
+2025-07-08 20:28:52,451 [INFO] Arguments: {'mode': 'learning', 'query': 'What are the different types of machine learning algorithms discussed in the book?', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:28:52,451 [INFO] Session ID: 20250708_145852
+2025-07-08 20:28:52,452 [INFO] Processing query: What are the different types of machine learning algorithms discussed in the book?
+2025-07-08 20:28:52,458 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:28:52,458 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:29:19,052 [INFO] === QuillAI Session Started ===
+2025-07-08 20:29:19,052 [INFO] User: AbhayRao38
+2025-07-08 20:29:19,052 [INFO] Arguments: {'mode': 'question', 'query': 'Compare supervised vs unsupervised learning with examples', 'marks': 10, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:29:19,052 [INFO] Session ID: 20250708_145919
+2025-07-08 20:29:19,053 [INFO] Processing query: Compare supervised vs unsupervised learning with examples
+2025-07-08 20:29:19,058 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:29:19,058 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:37:00,353 [INFO] === QuillAI Session Started ===
+2025-07-08 20:37:00,353 [INFO] User: AbhayRao38
+2025-07-08 20:37:00,353 [INFO] Arguments: {'mode': 'learning', 'query': 'test', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:37:00,353 [INFO] Session ID: 20250708_150700
+2025-07-08 20:37:00,354 [INFO] Processing query: test
+2025-07-08 20:37:00,363 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:37:00,363 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:37:27,040 [INFO] === QuillAI Session Started ===
+2025-07-08 20:37:27,040 [INFO] User: AbhayRao38
+2025-07-08 20:37:27,040 [INFO] Arguments: {'mode': 'question', 'query': 'AI', 'marks': 2, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:37:27,040 [INFO] Session ID: 20250708_150727
+2025-07-08 20:37:27,041 [INFO] Processing query: AI
+2025-07-08 20:37:27,046 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:37:27,046 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:37:56,923 [INFO] === QuillAI Session Started ===
+2025-07-08 20:37:56,923 [INFO] User: AbhayRao38
+2025-07-08 20:37:56,923 [INFO] Arguments: {'mode': 'question', 'query': 'Discuss the implications of quantum computing on modern cryptography, including real-world examples, mathematical underpinnings, and future research directions.', 'marks': 10, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:37:56,923 [INFO] Session ID: 20250708_150756
+2025-07-08 20:37:56,924 [INFO] Processing query: Discuss the implications of quantum computing on modern cryptography, including real-world examples, mathematical underpinnings, and future research directions.
+2025-07-08 20:37:56,928 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:37:56,928 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:39:27,548 [INFO] === QuillAI Session Started ===
+2025-07-08 20:39:27,548 [INFO] User: AbhayRao38
+2025-07-08 20:39:27,548 [INFO] Arguments: {'mode': None, 'query': 'paper', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:39:27,548 [INFO] Session ID: 20250708_150927
+2025-07-08 20:39:27,549 [INFO] Processing query: paper
+2025-07-08 20:39:27,554 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:39:27,554 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:39:54,178 [INFO] === QuillAI Session Started ===
+2025-07-08 20:39:54,178 [INFO] User: AbhayRao38
+2025-07-08 20:39:54,178 [INFO] Arguments: {'mode': None, 'query': 'questions', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:39:54,178 [INFO] Session ID: 20250708_150954
+2025-07-08 20:39:54,179 [INFO] Processing query: questions
+2025-07-08 20:39:54,184 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:39:54,184 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:40:16,460 [INFO] === QuillAI Session Started ===
+2025-07-08 20:40:16,461 [INFO] User: AbhayRao38
+2025-07-08 20:40:16,461 [INFO] Arguments: {'mode': None, 'query': 'summary', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None}
+2025-07-08 20:40:16,461 [INFO] Session ID: 20250708_151016
+2025-07-08 20:40:16,461 [INFO] Processing query: summary
+2025-07-08 20:40:16,465 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:40:16,465 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:40:48,919 [INFO] === QuillAI Session Started ===
+2025-07-08 20:40:48,919 [INFO] User: AbhayRao38
+2025-07-08 20:40:48,919 [INFO] Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': 'backpropagation'}
+2025-07-08 20:40:48,919 [INFO] Session ID: 20250708_151048
+2025-07-08 20:40:48,924 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:40:48,924 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-07-08 20:41:05,563 [INFO] === QuillAI Session Started ===
+2025-07-08 20:41:05,563 [INFO] User: AbhayRao38
+2025-07-08 20:41:05,563 [INFO] Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'no_rerank': False, 'no_citations': False, 'no_context': False, 'verbose': False, 'debug': False, 'test_intents': False, 'benchmark': False, 'test_pdf_processing': False, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': 'vanishing gradients'}
+2025-07-08 20:41:05,563 [INFO] Session ID: 20250708_151105
+2025-07-08 20:41:05,569 [INFO] Use pytorch device_name: cpu
+2025-07-08 20:41:05,569 [INFO] Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2

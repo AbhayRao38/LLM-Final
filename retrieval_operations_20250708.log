@@ -1,0 +1,146 @@
+2025-07-08 20:09:48,706 [Retrieval] INFO Indexed PDF: Machine Learning ( etc.) (z-lib.org).pdf, 350 chunks, 727433 characters
+2025-07-08 20:09:48,707 [Retrieval] INFO PDF indexed successfully: C:\Users\praoa\Downloads\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-08 20:09:48,709 [Retrieval] INFO PDF processing completed successfully: C:\Users\praoa\Downloads\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-08 20:10:37,553 [Retrieval] INFO Retrieved 3 chunks for query: Summarize key concepts, avg similarity: 0.427
+2025-07-08 20:10:37,662 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:10:37,672 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:10:37,672 [Retrieval] INFO Timestamp: 2025-07-08 14:40:37 UTC
+2025-07-08 20:10:37,672 [Retrieval] INFO Mode: learning
+2025-07-08 20:10:37,672 [Retrieval] INFO Marks: None
+2025-07-08 20:10:37,673 [Retrieval] INFO Context enabled: True
+2025-07-08 20:10:37,673 [Retrieval] INFO Generation successful: True
+2025-07-08 20:10:37,673 [Retrieval] INFO Word counts: 133
+2025-07-08 20:10:37,673 [Retrieval] INFO Generation times: 0.105001
+2025-07-08 20:10:37,673 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:11:00,483 [Retrieval] INFO Retrieved 3 chunks for query: Main topics, avg similarity: 0.421
+2025-07-08 20:11:00,667 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:11:00,668 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:11:00,668 [Retrieval] INFO Timestamp: 2025-07-08 14:41:00 UTC
+2025-07-08 20:11:00,668 [Retrieval] INFO Mode: question
+2025-07-08 20:11:00,668 [Retrieval] INFO Marks: 5
+2025-07-08 20:11:00,668 [Retrieval] INFO Context enabled: True
+2025-07-08 20:11:00,668 [Retrieval] INFO Generation successful: True
+2025-07-08 20:11:00,668 [Retrieval] INFO Word counts: 133
+2025-07-08 20:11:00,668 [Retrieval] INFO Generation times: 0.179834
+2025-07-08 20:11:00,668 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:11:22,925 [Retrieval] INFO Retrieved 3 chunks for query: Explain supervised learning, avg similarity: 0.540
+2025-07-08 20:11:26,639 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:11:26,639 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:11:26,639 [Retrieval] INFO Timestamp: 2025-07-08 14:41:26 UTC
+2025-07-08 20:11:26,639 [Retrieval] INFO Mode: learning
+2025-07-08 20:11:26,639 [Retrieval] INFO Marks: None
+2025-07-08 20:11:26,640 [Retrieval] INFO Context enabled: True
+2025-07-08 20:11:26,640 [Retrieval] INFO Generation successful: True
+2025-07-08 20:11:26,640 [Retrieval] INFO Word counts: 50
+2025-07-08 20:11:26,640 [Retrieval] INFO Generation times: 3.711148
+2025-07-08 20:11:26,640 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:11:48,767 [Retrieval] INFO Retrieved 3 chunks for query: Generate 10 questions about neural networks, avg similarity: 0.550
+2025-07-08 20:11:48,928 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:11:48,929 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:11:48,929 [Retrieval] INFO Timestamp: 2025-07-08 14:41:48 UTC
+2025-07-08 20:11:48,929 [Retrieval] INFO Mode: None
+2025-07-08 20:11:48,929 [Retrieval] INFO Marks: None
+2025-07-08 20:11:48,929 [Retrieval] INFO Context enabled: True
+2025-07-08 20:11:48,929 [Retrieval] INFO Generation successful: True
+2025-07-08 20:11:48,929 [Retrieval] INFO Word counts: 100
+2025-07-08 20:11:48,930 [Retrieval] INFO Generation times: 0.155995
+2025-07-08 20:11:48,930 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:28:41,260 [Retrieval] INFO Retrieved 3 chunks for query: Explain backpropagation algorithm in neural networks, avg similarity: 0.559
+2025-07-08 20:28:41,511 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:28:41,512 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:28:41,512 [Retrieval] INFO Timestamp: 2025-07-08 14:58:41 UTC
+2025-07-08 20:28:41,512 [Retrieval] INFO Mode: question
+2025-07-08 20:28:41,512 [Retrieval] INFO Marks: 10
+2025-07-08 20:28:41,512 [Retrieval] INFO Context enabled: True
+2025-07-08 20:28:41,512 [Retrieval] INFO Generation successful: True
+2025-07-08 20:28:41,512 [Retrieval] INFO Word counts: 325
+2025-07-08 20:28:41,512 [Retrieval] INFO Generation times: 0.248001
+2025-07-08 20:28:41,512 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:29:04,100 [Retrieval] INFO Retrieved 3 chunks for query: What are the different types of machine learning algorithms discussed in the book?, avg similarity: 0.536
+2025-07-08 20:29:08,017 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:29:08,017 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:29:08,017 [Retrieval] INFO Timestamp: 2025-07-08 14:59:08 UTC
+2025-07-08 20:29:08,017 [Retrieval] INFO Mode: learning
+2025-07-08 20:29:08,017 [Retrieval] INFO Marks: None
+2025-07-08 20:29:08,017 [Retrieval] INFO Context enabled: True
+2025-07-08 20:29:08,017 [Retrieval] INFO Generation successful: True
+2025-07-08 20:29:08,017 [Retrieval] INFO Word counts: 168
+2025-07-08 20:29:08,017 [Retrieval] INFO Generation times: 3.907264
+2025-07-08 20:29:08,017 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:29:30,391 [Retrieval] INFO Retrieved 3 chunks for query: Compare supervised vs unsupervised learning with examples, avg similarity: 0.484
+2025-07-08 20:29:30,657 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:29:30,657 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:29:30,657 [Retrieval] INFO Timestamp: 2025-07-08 14:59:30 UTC
+2025-07-08 20:29:30,657 [Retrieval] INFO Mode: question
+2025-07-08 20:29:30,658 [Retrieval] INFO Marks: 10
+2025-07-08 20:29:30,658 [Retrieval] INFO Context enabled: True
+2025-07-08 20:29:30,658 [Retrieval] INFO Generation successful: True
+2025-07-08 20:29:30,658 [Retrieval] INFO Word counts: 319
+2025-07-08 20:29:30,658 [Retrieval] INFO Generation times: 0.262997
+2025-07-08 20:29:30,658 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:37:12,567 [Retrieval] INFO Retrieved 3 chunks for query: test, avg similarity: 0.401
+2025-07-08 20:37:16,253 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:37:16,253 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:37:16,254 [Retrieval] INFO Timestamp: 2025-07-08 15:07:16 UTC
+2025-07-08 20:37:16,254 [Retrieval] INFO Mode: learning
+2025-07-08 20:37:16,254 [Retrieval] INFO Marks: None
+2025-07-08 20:37:16,254 [Retrieval] INFO Context enabled: True
+2025-07-08 20:37:16,254 [Retrieval] INFO Generation successful: True
+2025-07-08 20:37:16,254 [Retrieval] INFO Word counts: 62
+2025-07-08 20:37:16,254 [Retrieval] INFO Generation times: 3.683841
+2025-07-08 20:37:16,254 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:37:38,300 [Retrieval] INFO Retrieved 3 chunks for query: AI, avg similarity: 0.470
+2025-07-08 20:37:42,005 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:37:42,005 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:37:42,005 [Retrieval] INFO Timestamp: 2025-07-08 15:07:42 UTC
+2025-07-08 20:37:42,005 [Retrieval] INFO Mode: question
+2025-07-08 20:37:42,005 [Retrieval] INFO Marks: 2
+2025-07-08 20:37:42,005 [Retrieval] INFO Context enabled: True
+2025-07-08 20:37:42,005 [Retrieval] INFO Generation successful: True
+2025-07-08 20:37:42,005 [Retrieval] INFO Word counts: 87
+2025-07-08 20:37:42,005 [Retrieval] INFO Generation times: 3.701561
+2025-07-08 20:37:42,005 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:38:08,027 [Retrieval] INFO Retrieved 3 chunks for query: Discuss the implications of quantum computing on modern cryptography, including real-world examples,, avg similarity: 0.398
+2025-07-08 20:38:08,243 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:38:08,243 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:38:08,243 [Retrieval] INFO Timestamp: 2025-07-08 15:08:08 UTC
+2025-07-08 20:38:08,243 [Retrieval] INFO Mode: question
+2025-07-08 20:38:08,243 [Retrieval] INFO Marks: 10
+2025-07-08 20:38:08,243 [Retrieval] INFO Context enabled: True
+2025-07-08 20:38:08,243 [Retrieval] INFO Generation successful: True
+2025-07-08 20:38:08,243 [Retrieval] INFO Word counts: 323
+2025-07-08 20:38:08,243 [Retrieval] INFO Generation times: 0.212729
+2025-07-08 20:38:08,243 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:39:39,603 [Retrieval] INFO Retrieved 3 chunks for query: paper, avg similarity: 0.395
+2025-07-08 20:39:43,127 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:39:43,128 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:39:43,128 [Retrieval] INFO Timestamp: 2025-07-08 15:09:43 UTC
+2025-07-08 20:39:43,128 [Retrieval] INFO Mode: None
+2025-07-08 20:39:43,128 [Retrieval] INFO Marks: None
+2025-07-08 20:39:43,128 [Retrieval] INFO Context enabled: True
+2025-07-08 20:39:43,128 [Retrieval] INFO Generation successful: True
+2025-07-08 20:39:43,128 [Retrieval] INFO Word counts: 59
+2025-07-08 20:39:43,128 [Retrieval] INFO Generation times: 3.520924
+2025-07-08 20:39:43,128 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:40:05,565 [Retrieval] INFO Retrieved 3 chunks for query: questions, avg similarity: 0.434
+2025-07-08 20:40:05,678 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:40:05,678 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:40:05,678 [Retrieval] INFO Timestamp: 2025-07-08 15:10:05 UTC
+2025-07-08 20:40:05,678 [Retrieval] INFO Mode: None
+2025-07-08 20:40:05,678 [Retrieval] INFO Marks: None
+2025-07-08 20:40:05,678 [Retrieval] INFO Context enabled: True
+2025-07-08 20:40:05,678 [Retrieval] INFO Generation successful: True
+2025-07-08 20:40:05,679 [Retrieval] INFO Word counts: 57
+2025-07-08 20:40:05,679 [Retrieval] INFO Generation times: 0.110004
+2025-07-08 20:40:05,679 [Retrieval] INFO === END SESSION ===
+2025-07-08 20:40:27,641 [Retrieval] INFO Retrieved 3 chunks for query: summary, avg similarity: 0.393
+2025-07-08 20:40:27,817 [Retrieval] INFO === SESSION SUMMARY ===
+2025-07-08 20:40:27,817 [Retrieval] INFO User: AbhayRao38
+2025-07-08 20:40:27,817 [Retrieval] INFO Timestamp: 2025-07-08 15:10:27 UTC
+2025-07-08 20:40:27,817 [Retrieval] INFO Mode: None
+2025-07-08 20:40:27,818 [Retrieval] INFO Marks: None
+2025-07-08 20:40:27,818 [Retrieval] INFO Context enabled: True
+2025-07-08 20:40:27,818 [Retrieval] INFO Generation successful: True
+2025-07-08 20:40:27,818 [Retrieval] INFO Word counts: 140
+2025-07-08 20:40:27,818 [Retrieval] INFO Generation times: 0.173
+2025-07-08 20:40:27,818 [Retrieval] INFO === END SESSION ===

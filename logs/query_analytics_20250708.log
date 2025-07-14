@@ -1,0 +1,195 @@
+2025-07-08 20:10:34,416 [QUERY] Query: Summarize key concepts
+2025-07-08 20:10:34,417 [QUERY] Intent: summary_request
+2025-07-08 20:10:34,417 [QUERY] Domain: general
+2025-07-08 20:10:34,417 [QUERY] Topics: []
+2025-07-08 20:10:34,417 [QUERY] All intents: {'summary_request': np.float32(2.2214463)}
+2025-07-08 20:10:37,662 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:10:37,672 [QUERY] User: AbhayRao38
+2025-07-08 20:10:37,672 [QUERY] Timestamp: 2025-07-08 14:40:37 UTC
+2025-07-08 20:10:37,672 [QUERY] Mode: learning
+2025-07-08 20:10:37,672 [QUERY] Marks: None
+2025-07-08 20:10:37,673 [QUERY] Context enabled: True
+2025-07-08 20:10:37,673 [QUERY] Generation successful: True
+2025-07-08 20:10:37,673 [QUERY] Word counts: 133
+2025-07-08 20:10:37,673 [QUERY] Generation times: 0.105001
+2025-07-08 20:10:37,673 [QUERY] === END SESSION ===
+2025-07-08 20:10:57,064 [QUERY] Query: Main topics
+2025-07-08 20:10:57,064 [QUERY] Intent: summary_request
+2025-07-08 20:10:57,064 [QUERY] Domain: general
+2025-07-08 20:10:57,065 [QUERY] Topics: []
+2025-07-08 20:10:57,065 [QUERY] All intents: {'question_generation': np.float32(0.62357545), 'summary_request': np.float32(1.1169683), 'application': np.float32(0.62416106)}
+2025-07-08 20:11:00,667 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:11:00,668 [QUERY] User: AbhayRao38
+2025-07-08 20:11:00,668 [QUERY] Timestamp: 2025-07-08 14:41:00 UTC
+2025-07-08 20:11:00,668 [QUERY] Mode: question
+2025-07-08 20:11:00,668 [QUERY] Marks: 5
+2025-07-08 20:11:00,668 [QUERY] Context enabled: True
+2025-07-08 20:11:00,668 [QUERY] Generation successful: True
+2025-07-08 20:11:00,668 [QUERY] Word counts: 133
+2025-07-08 20:11:00,668 [QUERY] Generation times: 0.179834
+2025-07-08 20:11:00,668 [QUERY] === END SESSION ===
+2025-07-08 20:11:19,739 [QUERY] Query: Explain supervised learning
+2025-07-08 20:11:19,740 [QUERY] Intent: explanation
+2025-07-08 20:11:19,740 [QUERY] Domain: computer_science
+2025-07-08 20:11:19,740 [QUERY] Topics: ['supervised']
+2025-07-08 20:11:19,740 [QUERY] All intents: {'explanation': np.float32(2.205588), 'question_generation': np.float32(0.85430187), 'summary_request': np.float32(0.64549106), 'comparison': np.float32(1.1106867), 'definition': np.float32(0.7878401), 'application': np.float32(0.6361238)}
+2025-07-08 20:11:26,639 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:11:26,639 [QUERY] User: AbhayRao38
+2025-07-08 20:11:26,639 [QUERY] Timestamp: 2025-07-08 14:41:26 UTC
+2025-07-08 20:11:26,639 [QUERY] Mode: learning
+2025-07-08 20:11:26,639 [QUERY] Marks: None
+2025-07-08 20:11:26,640 [QUERY] Context enabled: True
+2025-07-08 20:11:26,640 [QUERY] Generation successful: True
+2025-07-08 20:11:26,640 [QUERY] Word counts: 50
+2025-07-08 20:11:26,640 [QUERY] Generation times: 3.711148
+2025-07-08 20:11:26,640 [QUERY] === END SESSION ===
+2025-07-08 20:11:45,642 [QUERY] Query: Generate 10 questions about neural networks
+2025-07-08 20:11:45,642 [QUERY] Intent: question_generation
+2025-07-08 20:11:45,643 [QUERY] Domain: computer_science
+2025-07-08 20:11:45,643 [QUERY] Topics: ['neural networks']
+2025-07-08 20:11:45,643 [QUERY] All intents: {'question_generation': np.float32(3.5435908), 'explanation': np.float32(1.1959826), 'application': np.float32(0.692679)}
+2025-07-08 20:11:48,928 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:11:48,929 [QUERY] User: AbhayRao38
+2025-07-08 20:11:48,929 [QUERY] Timestamp: 2025-07-08 14:41:48 UTC
+2025-07-08 20:11:48,929 [QUERY] Mode: None
+2025-07-08 20:11:48,929 [QUERY] Marks: None
+2025-07-08 20:11:48,929 [QUERY] Context enabled: True
+2025-07-08 20:11:48,929 [QUERY] Generation successful: True
+2025-07-08 20:11:48,929 [QUERY] Word counts: 100
+2025-07-08 20:11:48,930 [QUERY] Generation times: 0.155995
+2025-07-08 20:11:48,930 [QUERY] === END SESSION ===
+2025-07-08 20:28:37,545 [QUERY] Query: Explain backpropagation algorithm in neural networks
+2025-07-08 20:28:37,546 [QUERY] Intent: explanation
+2025-07-08 20:28:37,546 [QUERY] Domain: computer_science
+2025-07-08 20:28:37,546 [QUERY] Topics: ['neural networks']
+2025-07-08 20:28:37,546 [QUERY] All intents: {'explanation': np.float32(2.5180426), 'definition': np.float32(0.63842225)}
+2025-07-08 20:28:41,511 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:28:41,512 [QUERY] User: AbhayRao38
+2025-07-08 20:28:41,512 [QUERY] Timestamp: 2025-07-08 14:58:41 UTC
+2025-07-08 20:28:41,512 [QUERY] Mode: question
+2025-07-08 20:28:41,512 [QUERY] Marks: 10
+2025-07-08 20:28:41,512 [QUERY] Context enabled: True
+2025-07-08 20:28:41,512 [QUERY] Generation successful: True
+2025-07-08 20:28:41,512 [QUERY] Word counts: 325
+2025-07-08 20:28:41,512 [QUERY] Generation times: 0.248001
+2025-07-08 20:28:41,512 [QUERY] === END SESSION ===
+2025-07-08 20:29:00,870 [QUERY] Query: What are the different types of machine learning algorithms discussed in the book?
+2025-07-08 20:29:00,870 [QUERY] Intent: definition
+2025-07-08 20:29:00,871 [QUERY] Domain: general
+2025-07-08 20:29:00,871 [QUERY] Topics: []
+2025-07-08 20:29:00,871 [QUERY] All intents: {'definition': np.float32(1.8671572), 'question_generation': np.float32(1.1202248), 'list_generation': np.float32(0.8431416), 'comparison': np.float32(0.7021818), 'explanation': np.float32(0.8790481), 'application': np.float32(0.9904947)}
+2025-07-08 20:29:08,017 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:29:08,017 [QUERY] User: AbhayRao38
+2025-07-08 20:29:08,017 [QUERY] Timestamp: 2025-07-08 14:59:08 UTC
+2025-07-08 20:29:08,017 [QUERY] Mode: learning
+2025-07-08 20:29:08,017 [QUERY] Marks: None
+2025-07-08 20:29:08,017 [QUERY] Context enabled: True
+2025-07-08 20:29:08,017 [QUERY] Generation successful: True
+2025-07-08 20:29:08,017 [QUERY] Word counts: 168
+2025-07-08 20:29:08,017 [QUERY] Generation times: 3.907264
+2025-07-08 20:29:08,017 [QUERY] === END SESSION ===
+2025-07-08 20:29:27,036 [QUERY] Query: Compare supervised vs unsupervised learning with examples
+2025-07-08 20:29:27,036 [QUERY] Intent: comparison
+2025-07-08 20:29:27,036 [QUERY] Domain: computer_science
+2025-07-08 20:29:27,036 [QUERY] Topics: ['supervised', 'unsupervised']
+2025-07-08 20:29:27,036 [QUERY] All intents: {'comparison': np.float32(3.7432628), 'question_generation': np.float32(0.7449337), 'application': np.float32(0.6731007)}
+2025-07-08 20:29:30,657 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:29:30,657 [QUERY] User: AbhayRao38
+2025-07-08 20:29:30,657 [QUERY] Timestamp: 2025-07-08 14:59:30 UTC
+2025-07-08 20:29:30,657 [QUERY] Mode: question
+2025-07-08 20:29:30,658 [QUERY] Marks: 10
+2025-07-08 20:29:30,658 [QUERY] Context enabled: True
+2025-07-08 20:29:30,658 [QUERY] Generation successful: True
+2025-07-08 20:29:30,658 [QUERY] Word counts: 319
+2025-07-08 20:29:30,658 [QUERY] Generation times: 0.262997
+2025-07-08 20:29:30,658 [QUERY] === END SESSION ===
+2025-07-08 20:37:09,063 [QUERY] Query: test
+2025-07-08 20:37:09,063 [QUERY] Intent: definition
+2025-07-08 20:37:09,063 [QUERY] Domain: general
+2025-07-08 20:37:09,063 [QUERY] Topics: []
+2025-07-08 20:37:09,063 [QUERY] All intents: {}
+2025-07-08 20:37:16,253 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:37:16,253 [QUERY] User: AbhayRao38
+2025-07-08 20:37:16,254 [QUERY] Timestamp: 2025-07-08 15:07:16 UTC
+2025-07-08 20:37:16,254 [QUERY] Mode: learning
+2025-07-08 20:37:16,254 [QUERY] Marks: None
+2025-07-08 20:37:16,254 [QUERY] Context enabled: True
+2025-07-08 20:37:16,254 [QUERY] Generation successful: True
+2025-07-08 20:37:16,254 [QUERY] Word counts: 62
+2025-07-08 20:37:16,254 [QUERY] Generation times: 3.683841
+2025-07-08 20:37:16,254 [QUERY] === END SESSION ===
+2025-07-08 20:37:34,810 [QUERY] Query: AI
+2025-07-08 20:37:34,810 [QUERY] Intent: definition
+2025-07-08 20:37:34,811 [QUERY] Domain: general
+2025-07-08 20:37:34,811 [QUERY] Topics: []
+2025-07-08 20:37:34,811 [QUERY] All intents: {'question_generation': np.float32(0.67243403), 'definition': np.float32(1.3689547), 'explanation': np.float32(0.71223307), 'application': np.float32(1.2391404)}
+2025-07-08 20:37:42,005 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:37:42,005 [QUERY] User: AbhayRao38
+2025-07-08 20:37:42,005 [QUERY] Timestamp: 2025-07-08 15:07:42 UTC
+2025-07-08 20:37:42,005 [QUERY] Mode: question
+2025-07-08 20:37:42,005 [QUERY] Marks: 2
+2025-07-08 20:37:42,005 [QUERY] Context enabled: True
+2025-07-08 20:37:42,005 [QUERY] Generation successful: True
+2025-07-08 20:37:42,005 [QUERY] Word counts: 87
+2025-07-08 20:37:42,005 [QUERY] Generation times: 3.701561
+2025-07-08 20:37:42,005 [QUERY] === END SESSION ===
+2025-07-08 20:38:04,776 [QUERY] Query: Discuss the implications of quantum computing on modern cryptography, including real-world examples, mathematical underpinnings, and future research directions.
+2025-07-08 20:38:04,777 [QUERY] Intent: application
+2025-07-08 20:38:04,777 [QUERY] Domain: computer_science
+2025-07-08 20:38:04,777 [QUERY] Topics: ['graph', 'graph']
+2025-07-08 20:38:04,777 [QUERY] All intents: {'application': 1}
+2025-07-08 20:38:08,243 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:38:08,243 [QUERY] User: AbhayRao38
+2025-07-08 20:38:08,243 [QUERY] Timestamp: 2025-07-08 15:08:08 UTC
+2025-07-08 20:38:08,243 [QUERY] Mode: question
+2025-07-08 20:38:08,243 [QUERY] Marks: 10
+2025-07-08 20:38:08,243 [QUERY] Context enabled: True
+2025-07-08 20:38:08,243 [QUERY] Generation successful: True
+2025-07-08 20:38:08,243 [QUERY] Word counts: 323
+2025-07-08 20:38:08,243 [QUERY] Generation times: 0.212729
+2025-07-08 20:38:08,243 [QUERY] === END SESSION ===
+2025-07-08 20:39:35,967 [QUERY] Query: paper
+2025-07-08 20:39:35,967 [QUERY] Intent: definition
+2025-07-08 20:39:35,967 [QUERY] Domain: general
+2025-07-08 20:39:35,967 [QUERY] Topics: []
+2025-07-08 20:39:35,967 [QUERY] All intents: {}
+2025-07-08 20:39:43,127 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:39:43,128 [QUERY] User: AbhayRao38
+2025-07-08 20:39:43,128 [QUERY] Timestamp: 2025-07-08 15:09:43 UTC
+2025-07-08 20:39:43,128 [QUERY] Mode: None
+2025-07-08 20:39:43,128 [QUERY] Marks: None
+2025-07-08 20:39:43,128 [QUERY] Context enabled: True
+2025-07-08 20:39:43,128 [QUERY] Generation successful: True
+2025-07-08 20:39:43,128 [QUERY] Word counts: 59
+2025-07-08 20:39:43,128 [QUERY] Generation times: 3.520924
+2025-07-08 20:39:43,128 [QUERY] === END SESSION ===
+2025-07-08 20:40:02,505 [QUERY] Query: questions
+2025-07-08 20:40:02,505 [QUERY] Intent: question_generation
+2025-07-08 20:40:02,505 [QUERY] Domain: general
+2025-07-08 20:40:02,505 [QUERY] Topics: []
+2025-07-08 20:40:02,505 [QUERY] All intents: {'question_generation': np.float32(0.9292245), 'summary_request': np.float32(0.62772703)}
+2025-07-08 20:40:05,678 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:40:05,678 [QUERY] User: AbhayRao38
+2025-07-08 20:40:05,678 [QUERY] Timestamp: 2025-07-08 15:10:05 UTC
+2025-07-08 20:40:05,678 [QUERY] Mode: None
+2025-07-08 20:40:05,678 [QUERY] Marks: None
+2025-07-08 20:40:05,678 [QUERY] Context enabled: True
+2025-07-08 20:40:05,678 [QUERY] Generation successful: True
+2025-07-08 20:40:05,679 [QUERY] Word counts: 57
+2025-07-08 20:40:05,679 [QUERY] Generation times: 0.110004
+2025-07-08 20:40:05,679 [QUERY] === END SESSION ===
+2025-07-08 20:40:24,113 [QUERY] Query: summary
+2025-07-08 20:40:24,113 [QUERY] Intent: summary_request
+2025-07-08 20:40:24,114 [QUERY] Domain: general
+2025-07-08 20:40:24,114 [QUERY] Topics: []
+2025-07-08 20:40:24,114 [QUERY] All intents: {'summary_request': np.float32(2.0854273)}
+2025-07-08 20:40:27,817 [QUERY] === SESSION SUMMARY ===
+2025-07-08 20:40:27,817 [QUERY] User: AbhayRao38
+2025-07-08 20:40:27,817 [QUERY] Timestamp: 2025-07-08 15:10:27 UTC
+2025-07-08 20:40:27,817 [QUERY] Mode: None
+2025-07-08 20:40:27,818 [QUERY] Marks: None
+2025-07-08 20:40:27,818 [QUERY] Context enabled: True
+2025-07-08 20:40:27,818 [QUERY] Generation successful: True
+2025-07-08 20:40:27,818 [QUERY] Word counts: 140
+2025-07-08 20:40:27,818 [QUERY] Generation times: 0.173
+2025-07-08 20:40:27,818 [QUERY] === END SESSION ===

@@ -1,0 +1,15 @@
+torch>=1.9.0
+transformers>=4.21.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.0
+nltk>=3.7
+PyMuPDF>=1.20.0
+Pillow>=9.0.0
+pytesseract>=0.3.10
+fastapi>=0.95.0
+uvicorn[standard]>=0.20.0
+pydantic>=1.10.0
+python-multipart>=0.0.6
+numpy>=1.21.0
+scikit-learn>=1.1.0
+python-dotenv>=0.19.0
