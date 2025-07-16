@@ -11,18 +11,6 @@ import pickle
 from typing import List, Dict, Tuple, Optional
 import nltk
 from collections import Counter
-
-# Download required NLTK data
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt', quiet=True)
-
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords', quiet=True)
-
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 

@@ -1,4 +1,3 @@
-# Use a slim Python base image for smaller size and faster builds
 FROM python:3.10-slim
 
 # Install system dependencies for PyMuPDF, Tesseract OCR, FAISS, etc.
@@ -20,17 +19,16 @@ COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# Download required NLTK data at build time
+RUN python -m nltk.downloader punkt stopwords
+
 # Copy the rest of the code into the container
 COPY . .
 
-# (Recommended) Use /data for persistent storage (for PDFs, indexes, etc.)
-# If you want, create these folders (commented out, since your code creates them as needed)
-# RUN mkdir -p /data/textbooks /data/uploaded_pdfs
-
-# Expose port 7860 (required for Hugging Face Spaces); also supports local 8000 if needed
+# Expose port 7860 (required for Hugging Face Spaces)
 EXPOSE 7860
 
-# Set persistent storage path as environment variable (best practice for HF Spaces)
+# Set persistent storage path as environment variable (not required for your current code, but harmless)
 ENV HF_HOME=/data
 
 # Start FastAPI app on port 7860 (required by Hugging Face Spaces)
