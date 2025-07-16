@@ -1,0 +1,10 @@
+2025-07-15 11:03:50,109 [ERROR] [1d706c56-0d01-4305-a755-d290749582d0] Operation: Main Application
+2025-07-15 11:03:50,109 [ERROR] [1d706c56-0d01-4305-a755-d290749582d0] Error: 'session_id'
+2025-07-15 11:03:50,109 [ERROR] [1d706c56-0d01-4305-a755-d290749582d0] Error Type: KeyError
+2025-07-15 11:03:50,110 [ERROR] [1d706c56-0d01-4305-a755-d290749582d0] Traceback: Traceback (most recent call last):
+  File "C:\Users\praoa\llm\app.py", line 1882, in main
+    retrieval_system.print_index_stats()
+  File "C:\Users\praoa\llm\retrieval.py", line 1359, in print_index_stats
+    print(f"Session ID: {stats['session_id']}")
+KeyError: 'session_id'
+

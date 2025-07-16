@@ -1,0 +1,224 @@
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:12 ====================
+Query: Test query 0
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.64s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:16 ====================
+Query: Test query 1
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.20s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:19 ====================
+Query: Test query 2
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.17s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:22 ====================
+Query: Test query 3
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.26s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:25 ====================
+Query: Test query 4
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.31s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:28 ====================
+Query: Test query 5
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.14s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:32 ====================
+Query: Test query 6
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.18s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:35 ====================
+Query: Test query 7
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.55s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:38 ====================
+Query: Test query 8
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.21s
+================================================================================
+
+==================== c241548b-2e44-40d1-97d3-688328b86d42 05:19:42 ====================
+Query: Test query 9
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.11s
+================================================================================
+
+==================== f2787db0-69a7-4d1a-ab3c-d0481581efe3 05:19:55 ====================
+Query: Test query 0
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 4.96s
+================================================================================
+
+==================== f2787db0-69a7-4d1a-ab3c-d0481581efe3 05:19:56 ====================
+Query: Test query 1
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 5.61s
+================================================================================
+
+==================== f2787db0-69a7-4d1a-ab3c-d0481581efe3 05:19:56 ====================
+Query: Test query 2
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 5.61s
+================================================================================
+
+==================== f2787db0-69a7-4d1a-ab3c-d0481581efe3 05:19:59 ====================
+Query: Test query 3
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 4.21s
+================================================================================
+
+==================== f2787db0-69a7-4d1a-ab3c-d0481581efe3 05:20:00 ====================
+Query: Test query 4
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 4.14s
+================================================================================
+
+==================== f3459fa2-ea2a-4cbf-88d9-b5d59725ce45 05:20:13 ====================
+Query: Scalability test 0
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.67s
+================================================================================
+
+==================== eaa54475-04e3-4b3a-9efe-5cbac1b0bf0e 05:20:26 ====================
+Query: Scalability test 0
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 4.70s
+================================================================================
+
+==================== eaa54475-04e3-4b3a-9efe-5cbac1b0bf0e 05:20:29 ====================
+Query: Scalability test 1
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.23s
+================================================================================
+
+==================== eaa54475-04e3-4b3a-9efe-5cbac1b0bf0e 05:20:33 ====================
+Query: Scalability test 2
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.21s
+================================================================================
+
+==================== eaa54475-04e3-4b3a-9efe-5cbac1b0bf0e 05:20:36 ====================
+Query: Scalability test 3
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.24s
+================================================================================
+
+==================== eaa54475-04e3-4b3a-9efe-5cbac1b0bf0e 05:20:39 ====================
+Query: Scalability test 4
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.28s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:20:51 ====================
+Query: Scalability test 0
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 4.01s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:20:55 ====================
+Query: Scalability test 1
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.44s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:20:58 ====================
+Query: Scalability test 2
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.46s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:02 ====================
+Query: Scalability test 3
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.46s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:05 ====================
+Query: Scalability test 4
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.35s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:08 ====================
+Query: Scalability test 5
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.53s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:12 ====================
+Query: Scalability test 6
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.45s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:15 ====================
+Query: Scalability test 7
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.43s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:19 ====================
+Query: Scalability test 8
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.44s
+================================================================================
+
+==================== 60dba8a0-f92a-4cc1-9a10-e689f9748d19 05:21:23 ====================
+Query: Scalability test 9
+Detected intent: definition (confidence: 0.50)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.89s
+================================================================================
+
+==================== 3a5c593d-3ea2-402a-a9b6-da6b8012592b 05:25:46 ====================
+Query: What is machine learning?
+Detected intent: definition (confidence: 0.38)
+Detected domain: general (confidence: 0.30)
+Answer generated successfully in 3.17s
+================================================================================

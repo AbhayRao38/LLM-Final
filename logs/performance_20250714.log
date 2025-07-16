@@ -1,0 +1,3 @@
+2025-07-14 22:27:47,221 [PERF] [2e8f8711-27a9-447b-a620-b62f636fe4bc] Operation: Query Processing
+2025-07-14 22:27:47,221 [PERF] [2e8f8711-27a9-447b-a620-b62f636fe4bc] Duration: 17.71s
+2025-07-14 22:27:47,221 [PERF] [2e8f8711-27a9-447b-a620-b62f636fe4bc] Metadata: {'intent': 'definition', 'domain': 'general', 'context_chunks': 0, 'response_length': 33}

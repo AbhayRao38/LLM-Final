@@ -2,7 +2,7 @@ import argparse
 import sys
 import os
 from datetime import datetime
-from knowledgebase import KnowledgeBaseManage
+from knowledgebase import KnowledgeBaseManager
 from retrieval import RetrievalAugmentor
 import quillai_llm
 import logging
@@ -10,6 +10,129 @@ import re
 
 print(f"✅ Loaded Enhanced QuillAILLM from: {quillai_llm.__file__}")
 QuillAILLM = quillai_llm.QuillAILLM
+
+# Pydantic models for API compatibility
+from pydantic import BaseModel
+from typing import Optional, List
+
+class QueryRequest(BaseModel):
+    query: str
+    mode: str  # "learning" or "question"
+    marks: Optional[int] = None
+
+class QueryResponse(BaseModel):
+    success: bool
+    llm_output: Optional[str] = None
+    custom_output: Optional[str] = None
+    intent: Optional[str] = None
+    domain: Optional[str] = None
+    topics: Optional[List[str]] = None
+    context_used: bool = False
+    generation_time: float = 0.0
+    word_count: int = 0
+    timestamp: str
+    error_message: Optional[str] = None
+
+def initialize_api_components():
+    """Initialize LLM and retrieval components for API use."""
+    try:
+        # Initialize LLM
+        llm = QuillAILLM(
+            model_name="microsoft/DialoGPT-medium",
+            force_model_check=True,
+            debug_mode=False
+        )
+        
+        # Initialize retrieval system
+        retrieval_system = RetrievalAugmentor(
+            chunk_size=400,
+            chunk_overlap=50
+        )
+        
+        print("✅ API components initialized successfully")
+        return llm, retrieval_system
+        
+    except Exception as e:
+        print(f"❌ Failed to initialize API components: {e}")
+        raise
+
+def process_api_query(request) -> dict:
+    """
+    Process API query and return dual outputs.
+    
+    Args:
+        request: Query request object with query, mode, marks attributes
+        
+    Returns:
+        dict: Response with dual outputs and metadata
+    """
+    from datetime import datetime
+    
+    start_time = datetime.utcnow()
+    
+    try:
+        # Initialize components
+        llm, retrieval_system = initialize_api_components()
+        
+        # Detect query intent and domain
+        intent, intent_confidence, all_intents = llm.detect_query_intent(request.query)
+        domain, topics, domain_confidence = llm.detect_domain_and_topic(request.query)
+        
+        # Retrieve context if available
+        context_chunks = []
+        context_used = False
+        
+        try:
+            context_chunks = retrieval_system.retrieve_context(
+                request.query,
+                top_k=3,
+                min_score_threshold=0.3
+            )
+            context_used = len(context_chunks) > 0
+        except Exception as e:
+            print(f"⚠️ Context retrieval failed: {e}")
+        
+        # Generate dual response
+        dual_response = llm.generate_dual_response(
+            query=request.query,
+            mode=request.mode or "learning",
+            marks=request.marks,
+            context_chunks=context_chunks,
+            temperature=0.8
+        )
+        
+        generation_time = (datetime.utcnow() - start_time).total_seconds()
+        
+        # Calculate word counts
+        llm_word_count = len(dual_response.get("llm_output", "").split())
+        custom_word_count = len(dual_response.get("custom_output", "").split())
+        total_word_count = llm_word_count + custom_word_count
+        
+        # Prepare response
+        response = {
+            "success": True,
+            "llm_output": dual_response.get("llm_output", ""),
+            "custom_output": dual_response.get("custom_output", ""),
+            "intent": intent,
+            "domain": domain,
+            "topics": topics,
+            "context_used": context_used,
+            "generation_time": generation_time,
+            "word_count": total_word_count,
+            "timestamp": datetime.utcnow().isoformat() + "Z"
+        }
+        
+        return response
+        
+    except Exception as e:
+        error_msg = f"Query processing failed: {str(e)}"
+        print(f"❌ {error_msg}")
+        
+        return {
+            "success": False,
+            "error_message": error_msg,
+            "timestamp": datetime.utcnow().isoformat() + "Z"
+        }
 
 """
 ENHANCED Main application script with comprehensive solutions:

@@ -1,0 +1,187 @@
+
+==================== AbhayRao38 18:12:16 ====================
+Query: What is machine learning?
+Detected intent: definition (confidence: 0.38)
+All intents: {'definition': np.float32(2.2760625), 'question_generation': np.float32(1.1463028), 'comparison': np.float32(0.71993995), 'explanation': np.float32(0.9654573), 'application': np.float32(0.8191922)}
+Detected domain: general (confidence: 0.30)
+Topics: []
+Mode: learning, Marks: None, Target words: None
+Temperature: 0.8, Max new tokens: 400
+Using 1 relevant context chunk(s)
+Final input token length: 86 / 594
+Applied deduplication to remove repeated content
+Final answer length: 465 chars, words: 63
+Total processing time: 3.84 seconds
+================================================================================
+
+==================== AbhayRao38 18:12:16 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: What is machine learning?
+Mode: learning, Marks: None, Target words: None
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 63 words in 3.84s
+--- Starting Enhanced Custom Academic Generation ---
+Enhanced custom generation successful: 150 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 3.84s
+LLM: 63 words, Enhanced Custom: 150 words
+================================================================================
+
+==================== AbhayRao38 18:13:33 ====================
+Query: Explain neural networks.
+Detected intent: explanation (confidence: 0.52)
+All intents: {'explanation': np.float32(2.7665858), 'question_generation': np.float32(0.83602506), 'definition': np.float32(0.9603052), 'application': np.float32(0.8015726)}
+Detected domain: computer_science (confidence: 1.00)
+Topics: ['neural networks']
+Mode: question, Marks: 5, Target words: 250
+Temperature: 0.8, Max new tokens: 300
+Using 1 relevant context chunk(s)
+Final input token length: 109 / 694
+Applied deduplication to remove repeated content
+Expanded response to meet target word count
+Final answer length: 1846 chars, words: 218
+Total processing time: 4.03 seconds
+================================================================================
+
+==================== AbhayRao38 18:13:33 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: Explain neural networks.
+Mode: question, Marks: 5, Target words: 250
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 218 words in 4.03s
+--- Starting Enhanced Custom Academic Generation ---
+Enhanced custom generation successful: 166 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 4.03s
+LLM: 218 words, Enhanced Custom: 166 words
+================================================================================
+
+==================== AbhayRao38 18:18:23 ====================
+Query: Define supervised learning and give two examples.
+Detected intent: definition (confidence: 0.28)
+All intents: {'list_generation': 1, 'definition': np.float32(1.7828664), 'question_generation': np.float32(0.7982313), 'comparison': np.float32(1.1257328), 'explanation': np.float32(0.739328), 'application': np.float32(0.8843285)}
+Detected domain: computer_science (confidence: 1.00)
+Topics: ['supervised']
+Mode: learning, Marks: None, Target words: None
+Temperature: 0.8, Max new tokens: 400
+Using 1 relevant context chunk(s)
+Final input token length: 111 / 594
+Applied deduplication to remove repeated content
+Final answer length: 504 chars, words: 71
+Total processing time: 4.16 seconds
+================================================================================
+
+==================== AbhayRao38 18:18:23 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: Define supervised learning and give two examples.
+Mode: learning, Marks: None, Target words: None
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 71 words in 4.16s
+--- Starting Enhanced Custom Academic Generation ---
+Custom generation failed: AttributeError("'QuillAILLM' object has no attribute '_generate_enhanced_generic_response'")
+Custom fallback used: 150 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 4.16s
+LLM: 71 words, Enhanced Custom: 150 words
+================================================================================
+
+==================== AbhayRao38 18:18:48 ====================
+Query: Compare supervised and unsupervised learning.
+Detected intent: comparison (confidence: 0.79)
+All intents: {'comparison': np.float32(2.9294014), 'question_generation': np.float32(0.77916574)}
+Detected domain: computer_science (confidence: 1.00)
+Topics: ['supervised', 'unsupervised']
+Mode: question, Marks: 5, Target words: 250
+Temperature: 0.8, Max new tokens: 300
+Using 1 relevant context chunk(s)
+Final input token length: 104 / 694
+Applied deduplication to remove repeated content
+Expanded response to meet target word count
+Final answer length: 1769 chars, words: 216
+Total processing time: 3.64 seconds
+================================================================================
+
+==================== AbhayRao38 18:18:48 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: Compare supervised and unsupervised learning.
+Mode: question, Marks: 5, Target words: 250
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 216 words in 3.65s
+--- Starting Enhanced Custom Academic Generation ---
+Custom generation failed: AttributeError("'QuillAILLM' object has no attribute '_generate_enhanced_generic_response'")
+Custom fallback used: 111 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 3.65s
+LLM: 216 words, Enhanced Custom: 111 words
+================================================================================
+
+==================== AbhayRao38 18:19:27 ====================
+Query: Discuss the applications of neural networks in healthcare.
+Detected intent: application (confidence: 0.43)
+All intents: {'application': np.float32(1.9917963), 'question_generation': np.float32(0.8370017), 'definition': np.float32(0.6283652), 'explanation': np.float32(1.2281984)}
+Detected domain: computer_science (confidence: 1.00)
+Topics: ['neural networks']
+Mode: question, Marks: 10, Target words: 500
+Temperature: 0.8, Max new tokens: 550
+Using 1 relevant context chunk(s)
+Using outline-expansion method for long answer
+Applied deduplication to remove repeated content
+Expanded response to meet target word count
+Final answer length: 2818 chars, words: 333
+Total processing time: 0.21 seconds
+================================================================================
+
+==================== AbhayRao38 18:19:27 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: Discuss the applications of neural networks in healthcare.
+Mode: question, Marks: 10, Target words: 500
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 333 words in 0.21s
+--- Starting Enhanced Custom Academic Generation ---
+Enhanced custom generation successful: 281 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 0.21s
+LLM: 333 words, Enhanced Custom: 281 words
+================================================================================
+
+==================== AbhayRao38 18:19:58 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: Create a rubric for evaluating a student project on deep learning.
+Mode: learning, Marks: None, Target words: None
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 127 words in 0.10s
+--- Starting Enhanced Custom Academic Generation ---
+Custom generation failed: AttributeError("'QuillAILLM' object has no attribute '_generate_enhanced_generic_response'")
+Custom fallback used: 150 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 0.10s
+LLM: 127 words, Enhanced Custom: 150 words
+================================================================================
+
+==================== AbhayRao38 18:20:25 ====================
+=== ENHANCED DUAL RESPONSE GENERATION ===
+Query: Generate 5 short answer questions about decision trees.
+Mode: learning, Marks: None, Target words: None
+Temperature: 0.8
+Context chunks: 3
+--- Starting LLM Generation ---
+LLM generation successful: 69 words in 0.11s
+--- Starting Enhanced Custom Academic Generation ---
+Custom generation failed: AttributeError("'QuillAILLM' object has no attribute '_generate_enhanced_generic_response'")
+Custom fallback used: 138 words in 0.00s
+=== ENHANCED DUAL GENERATION COMPLETE ===
+Total time: 0.11s
+LLM: 69 words, Enhanced Custom: 138 words
+================================================================================

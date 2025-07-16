@@ -1,15 +1,39 @@
-torch>=1.9.0
-transformers>=4.21.0
+# Core NLP and ML
+torch>=1.10.0
+transformers>=4.20.0
 sentence-transformers>=2.2.0
-faiss-cpu>=1.7.0
-nltk>=3.7
-PyMuPDF>=1.20.0
-Pillow>=9.0.0
-pytesseract>=0.3.10
-fastapi>=0.95.0
-uvicorn[standard]>=0.20.0
-pydantic>=1.10.0
-python-multipart>=0.0.6
-numpy>=1.21.0
-scikit-learn>=1.1.0
+faiss-cpu>=1.7.1
+scikit-learn>=0.24.2
+nltk>=3.6.2
+
+# PDF and OCR
+PyMuPDF>=1.18.19
+pytesseract>=0.3.8
+Pillow>=8.2.0
+python-magic>=0.4.24
+
+# Web and API
+fastapi>=0.78.0
+uvicorn[standard]>=0.18.2
+pydantic>=1.8.2
+
+# Async, background jobs
+celery>=5.2.3
+
+# Logging, monitoring, and utility
+psutil>=5.8.0
 python-dotenv>=0.19.0
+
+# For evaluation metrics
+rouge-score>=0.0.4
+
+# Optional: For CORS, security, and HTTP tools
+httpx>=0.22.0
+
+# Optional: For testing and coverage
+pytest>=6.2.5
+
+# Optional: For concurrency if using ThreadPoolExecutor
+concurrent-log-handler>=0.9.20
+
+# Remove any packages not used in the new codebase.

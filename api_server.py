@@ -1,14 +1,18 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from typing import Optional, List
 import shutil
 import os
 from datetime import datetime
 import logging
+import sys
+
+# Add the current directory to Python path to import local modules
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import your existing modules
-from app import process_api_query, initialize_api_components, QueryRequest, QueryResponse
+from app import process_api_query, initialize_api_components
 from knowledgebase import KnowledgeBaseManager
 from retrieval import RetrievalAugmentor
 
@@ -30,6 +34,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Updated Pydantic models for Flutter compatibility
+class QueryRequest(BaseModel):
+    prompt: str  # Frontend sends "prompt" instead of "query"
+    mode: int    # Frontend sends 0 (learning) or 1 (question)
+    marks: int   # Frontend sends 0, 2, 5, or 10
+    
+    @validator('mode')
+    def validate_mode(cls, v):
+        if v not in [0, 1]:
+            raise ValueError('Mode must be 0 (learning) or 1 (question)')
+        return v
+    
+    @validator('marks')
+    def validate_marks(cls, v):
+        if v not in [0, 2, 5, 10]:
+            raise ValueError('Marks must be 0, 2, 5, or 10')
+        return v
+    
+    def to_internal_format(self):
+        """Convert frontend format to internal format"""
+        return {
+            'query': self.prompt,  # Map prompt to query
+            'mode': 'learning' if self.mode == 0 else 'question',  # Convert int to string
+            'marks': self.marks if self.marks > 0 else None  # Convert 0 to None for learning mode
+        }
 # Pydantic models for additional endpoints
 class PDFUploadResponse(BaseModel):
     success: bool
@@ -76,28 +105,43 @@ async def process_query(request: QueryRequest):
     This is the main endpoint your Flutter app will call.
     """
     try:
-        print(f"📝 Processing query: {request.query[:50]}...")
+        print(f"📝 Processing query: {request.prompt[:50]}...")
         
         # Validate request
-        if not request.query or not request.query.strip():
+        if not request.prompt or not request.prompt.strip():
             raise HTTPException(status_code=400, detail="Query cannot be empty")
         
-        if request.mode not in ["learning", "question"]:
-            raise HTTPException(status_code=400, detail="Mode must be 'learning' or 'question'")
+        # Convert frontend format to internal format
+        internal_request = request.to_internal_format()
         
-        if request.marks and request.marks not in [2, 5, 10]:
-            raise HTTPException(status_code=400, detail="Marks must be 2, 5, or 10")
+        # Create internal QueryRequest object
+        from types import SimpleNamespace
+        internal_query_obj = SimpleNamespace(**internal_request)
         
         # Process the query
-        result = process_api_query(request)
+        result = process_api_query(internal_query_obj)
         
         if not result["success"]:
             raise HTTPException(status_code=500, detail=result["error_message"])
         
-        # Log successful request
-        logging.info(f"Successful query: {request.query[:100]}, Intent: {result['intent']}, Domain: {result['domain']}")
+        # Remap output keys to match frontend expectations
+        frontend_response = {
+            "success": result["success"],
+            "dialo gpt output": result.get("llm_output", ""),
+            "custom llm": result.get("custom_output", ""),
+            "intent": result.get("intent", ""),
+            "domain": result.get("domain", ""),
+            "topics": result.get("topics", []),
+            "context_used": result.get("context_used", False),
+            "generation_time": result.get("generation_time", 0),
+            "word_count": result.get("word_count", 0),
+            "timestamp": result.get("timestamp", "")
+        }
         
-        return result
+        # Log successful request
+        logging.info(f"Successful query: {request.prompt[:100]}, Intent: {result.get('intent', 'unknown')}, Domain: {result.get('domain', 'unknown')}")
+        
+        return frontend_response
         
     except HTTPException:
         raise

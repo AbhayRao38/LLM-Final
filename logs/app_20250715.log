@@ -1,0 +1,150 @@
+2025-07-15 10:36:56,156 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO === QuillAI Session Started ===
+2025-07-15 10:36:56,157 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Version: 2.0.0
+2025-07-15 10:36:56,157 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Session ID: 7eb8580f-b64e-4bab-a1fc-af241ba29693
+2025-07-15 10:36:56,157 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': True, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 10:36:56,187 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 10:36:56,188 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 10:36:56,188 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 10:37:26,512 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO === QuillAI Session Ended ===
+2025-07-15 10:37:26,512 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Duration: 30.36 seconds
+2025-07-15 10:37:26,512 [APP] [7eb8580f-b64e-4bab-a1fc-af241ba29693] INFO Success: True
+2025-07-15 10:47:19,805 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO === QuillAI Session Started ===
+2025-07-15 10:47:19,806 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Version: 2.0.0
+2025-07-15 10:47:19,806 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Session ID: 713ae163-78df-40a5-8e5f-d4afaa9d76e5
+2025-07-15 10:47:19,806 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': True, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 10:47:19,848 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 10:47:19,848 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 10:47:19,848 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 10:47:51,413 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO === QuillAI Session Ended ===
+2025-07-15 10:47:51,413 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Duration: 31.61 seconds
+2025-07-15 10:47:51,413 [APP] [713ae163-78df-40a5-8e5f-d4afaa9d76e5] INFO Success: True
+2025-07-15 10:48:34,345 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO === QuillAI Session Started ===
+2025-07-15 10:48:34,345 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Version: 2.0.0
+2025-07-15 10:48:34,345 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Session ID: 2eb87289-0d3d-4c0a-8ca4-90c8353aa413
+2025-07-15 10:48:34,345 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': True, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 10:48:34,392 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 10:48:34,392 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 10:48:34,392 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 10:51:23,183 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO === QuillAI Session Ended ===
+2025-07-15 10:51:23,183 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Duration: 168.84 seconds
+2025-07-15 10:51:23,184 [APP] [2eb87289-0d3d-4c0a-8ca4-90c8353aa413] INFO Success: True
+2025-07-15 10:54:48,478 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO === QuillAI Session Started ===
+2025-07-15 10:54:48,478 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Version: 2.0.0
+2025-07-15 10:54:48,478 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Session ID: 42193591-b2ce-43b7-8a8e-f52b772286ab
+2025-07-15 10:54:48,478 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': True, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 10:54:48,527 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 10:54:48,527 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 10:54:48,527 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 10:54:55,684 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Received signal 2, shutting down gracefully...
+2025-07-15 10:54:55,685 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO === QuillAI Session Ended ===
+2025-07-15 10:54:55,685 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Duration: 7.21 seconds
+2025-07-15 10:54:55,685 [APP] [42193591-b2ce-43b7-8a8e-f52b772286ab] INFO Success: True
+2025-07-15 10:55:28,600 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO === QuillAI Session Started ===
+2025-07-15 10:55:28,600 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Version: 2.0.0
+2025-07-15 10:55:28,600 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Session ID: 3a5c593d-3ea2-402a-a9b6-da6b8012592b
+2025-07-15 10:55:28,600 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Arguments: {'mode': 'learning', 'query': 'What is machine learning?', 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': True, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 10:55:28,704 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 10:55:28,704 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 10:55:28,704 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 10:55:28,705 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Processing query: What is machine learning?
+2025-07-15 10:55:28,706 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Initializing system components...
+2025-07-15 10:55:43,083 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO All components initialized successfully
+2025-07-15 10:57:47,064 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO User feedback submitted: ae163727-ed9c-4f7e-a708-865cee47732a, rating: 1
+2025-07-15 10:57:47,073 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO === QuillAI Session Ended ===
+2025-07-15 10:57:47,074 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Duration: 138.47 seconds
+2025-07-15 10:57:47,074 [APP] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] INFO Success: True
+2025-07-15 11:02:14,033 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO === QuillAI Session Started ===
+2025-07-15 11:02:14,034 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Version: 2.0.0
+2025-07-15 11:02:14,034 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Session ID: e197cdcc-c759-43e6-8a3a-fb0972df63de
+2025-07-15 11:02:14,034 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\llm\\textbooks\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:02:14,087 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:02:14,087 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:02:14,087 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:02:14,099 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Processing PDF: C:\Users\praoa\llm\textbooks\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-15 11:02:14,100 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Initializing system components...
+2025-07-15 11:02:28,666 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO All components initialized successfully
+2025-07-15 11:02:28,900 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO === QuillAI Session Ended ===
+2025-07-15 11:02:28,900 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Duration: 14.87 seconds
+2025-07-15 11:02:28,901 [APP] [e197cdcc-c759-43e6-8a3a-fb0972df63de] INFO Success: False
+2025-07-15 11:03:08,734 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO === QuillAI Session Started ===
+2025-07-15 11:03:08,734 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Version: 2.0.0
+2025-07-15 11:03:08,734 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Session ID: dd526ebe-57b4-4a67-b6a0-4df131bc41cb
+2025-07-15 11:03:08,735 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': True, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:03:08,791 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:03:08,791 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:03:08,791 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:03:08,859 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO === QuillAI Session Ended ===
+2025-07-15 11:03:08,859 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Duration: 0.13 seconds
+2025-07-15 11:03:08,859 [APP] [dd526ebe-57b4-4a67-b6a0-4df131bc41cb] INFO Success: True
+2025-07-15 11:03:43,373 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO === QuillAI Session Started ===
+2025-07-15 11:03:43,373 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Version: 2.0.0
+2025-07-15 11:03:43,373 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Session ID: 1d706c56-0d01-4305-a755-d290749582d0
+2025-07-15 11:03:43,373 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': True, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:03:43,426 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:03:43,426 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:03:43,427 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:03:50,119 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO === QuillAI Session Ended ===
+2025-07-15 11:03:50,119 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Duration: 6.75 seconds
+2025-07-15 11:03:50,120 [APP] [1d706c56-0d01-4305-a755-d290749582d0] INFO Success: False
+2025-07-15 11:04:42,677 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO === QuillAI Session Started ===
+2025-07-15 11:04:42,677 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Version: 2.0.0
+2025-07-15 11:04:42,678 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Session ID: 19dc9499-3bc0-4306-b814-39c1a4c7e1d6
+2025-07-15 11:04:42,678 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': None, 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': 'Machine Learning ( etc.) (z-lib.org).pdf', 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:04:42,746 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:04:42,746 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:04:42,746 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:04:42,748 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO === QuillAI Session Ended ===
+2025-07-15 11:04:42,748 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Duration: 0.07 seconds
+2025-07-15 11:04:42,748 [APP] [19dc9499-3bc0-4306-b814-39c1a4c7e1d6] INFO Success: False
+2025-07-15 11:05:00,167 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO === QuillAI Session Started ===
+2025-07-15 11:05:00,167 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Version: 2.0.0
+2025-07-15 11:05:00,168 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Session ID: b55e390e-7fca-4413-88b2-8a8ba6f5901d
+2025-07-15 11:05:00,168 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\llm\\textbooks\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:05:00,220 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:05:00,220 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:05:00,220 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:05:00,222 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Processing PDF: C:\Users\praoa\llm\textbooks\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-15 11:05:00,222 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Initializing system components...
+2025-07-15 11:05:16,363 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO All components initialized successfully
+2025-07-15 11:05:16,469 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO === QuillAI Session Ended ===
+2025-07-15 11:05:16,469 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Duration: 16.30 seconds
+2025-07-15 11:05:16,470 [APP] [b55e390e-7fca-4413-88b2-8a8ba6f5901d] INFO Success: False
+2025-07-15 11:05:40,312 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO === QuillAI Session Started ===
+2025-07-15 11:05:40,312 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Version: 2.0.0
+2025-07-15 11:05:40,312 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Session ID: 338cd5b6-6db0-451d-9e08-f721105eff27
+2025-07-15 11:05:40,312 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\llm\\textbooks\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': True, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:05:40,361 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:05:40,361 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:05:40,361 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:05:40,363 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Processing PDF: C:\Users\praoa\llm\textbooks\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-15 11:05:40,363 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Initializing system components...
+2025-07-15 11:05:57,308 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO All components initialized successfully
+2025-07-15 11:05:57,422 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO === QuillAI Session Ended ===
+2025-07-15 11:05:57,422 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Duration: 17.11 seconds
+2025-07-15 11:05:57,422 [APP] [338cd5b6-6db0-451d-9e08-f721105eff27] INFO Success: False
+2025-07-15 11:07:22,675 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO === QuillAI Session Started ===
+2025-07-15 11:07:22,675 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Version: 2.0.0
+2025-07-15 11:07:22,676 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Session ID: 4a26eb2f-166e-4948-b249-c95abcc6c79e
+2025-07-15 11:07:22,676 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\llm\\textbooks\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': True, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:07:22,791 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:07:22,791 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:07:22,792 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:07:22,794 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Processing PDF: C:\Users\praoa\llm\textbooks\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-15 11:07:22,794 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Initializing system components...
+2025-07-15 11:07:35,780 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Received signal 2, shutting down gracefully...
+2025-07-15 11:07:35,781 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO === QuillAI Session Ended ===
+2025-07-15 11:07:35,781 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Duration: 13.11 seconds
+2025-07-15 11:07:35,781 [APP] [4a26eb2f-166e-4948-b249-c95abcc6c79e] INFO Success: True
+2025-07-15 11:08:27,047 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO === QuillAI Session Started ===
+2025-07-15 11:08:27,056 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Version: 2.0.0
+2025-07-15 11:08:27,056 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Session ID: ee82aca3-13ae-46b3-a775-92204c63f9a4
+2025-07-15 11:08:27,056 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Arguments: {'mode': None, 'query': None, 'marks': None, 'pdf': 'C:\\Users\\praoa\\llm\\textbooks\\Machine Learning ( etc.) (z-lib.org).pdf', 'use_ocr': False, 'pdf_language': 'eng', 'force_rebuild': False, 'model_name': 'microsoft/DialoGPT-medium', 'temperature': 0.8, 'max_tokens': None, 'top_k': 3, 'chunk_size': 400, 'chunk_overlap': 50, 'min_similarity': 0.3, 'no_context': False, 'no_rerank': False, 'no_citations': False, 'no_feedback': False, 'debug': False, 'verbose': False, 'session_id': None, 'storage_dir': 'textbooks', 'logs_dir': 'logs', 'run_tests': False, 'run_unit_tests': False, 'run_integration_tests': False, 'run_performance_tests': False, 'evaluate': None, 'max_eval_samples': 100, 'start_api': False, 'host': '0.0.0.0', 'port': 8000, 'api_key': None, 'enable_auth': False, 'allowed_origins': None, 'list_pdfs': False, 'kb_stats': False, 'index_stats': False, 'remove_source': None, 'search_chunks': None, 'validate_integrity': False, 'backup_kb': False, 'backup_index': False, 'submit_feedback': False, 'feedback_stats': False}
+2025-07-15 11:08:27,104 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Git Hash: 3ec236808f7fe0e884cc8715e603876c83f8a9a3
+2025-07-15 11:08:27,105 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Python Version: 3.10.11 (tags/v3.10.11:7d4cc5a, Apr  5 2023, 00:38:17) [MSC v.1929 64 bit (AMD64)]
+2025-07-15 11:08:27,105 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Working Directory: C:\Users\praoa\llm
+2025-07-15 11:08:27,107 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Processing PDF: C:\Users\praoa\llm\textbooks\Machine Learning ( etc.) (z-lib.org).pdf
+2025-07-15 11:08:27,107 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Initializing system components...
+2025-07-15 11:08:43,239 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO All components initialized successfully
+2025-07-15 11:08:43,412 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO === QuillAI Session Ended ===
+2025-07-15 11:08:43,412 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Duration: 16.37 seconds
+2025-07-15 11:08:43,413 [APP] [ee82aca3-13ae-46b3-a775-92204c63f9a4] INFO Success: False
