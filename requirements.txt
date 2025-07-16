@@ -36,4 +36,6 @@ pytest>=6.2.5
 # Optional: For concurrency if using ThreadPoolExecutor
 concurrent-log-handler>=0.9.20
 
+python-multipart
+
 # Remove any packages not used in the new codebase.

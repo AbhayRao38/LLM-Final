@@ -1,6 +1,7 @@
+# Use a slim Python base image for smaller size and faster builds
 FROM python:3.10-slim
 
-# Install system dependencies for PyMuPDF, Tesseract, FAISS, etc.
+# Install system dependencies for PyMuPDF, Tesseract OCR, FAISS, etc.
 RUN apt-get update && apt-get install -y \
     build-essential \
     tesseract-ocr \
@@ -11,21 +12,25 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Create a directory for your app
+# Set a working directory for the app
 WORKDIR /code
 
-# Copy requirements and install them
+# Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Copy all files to the container
+# Copy the rest of the code into the container
 COPY . .
 
-# Expose port 7860 (required by Hugging Face Spaces)
+# (Recommended) Use /data for persistent storage (for PDFs, indexes, etc.)
+# If you want, create these folders (commented out, since your code creates them as needed)
+# RUN mkdir -p /data/textbooks /data/uploaded_pdfs
+
+# Expose port 7860 (required for Hugging Face Spaces); also supports local 8000 if needed
 EXPOSE 7860
 
-# Set persistent storage path as environment variable (for HF Spaces best practice)
+# Set persistent storage path as environment variable (best practice for HF Spaces)
 ENV HF_HOME=/data
 
 # Start FastAPI app on port 7860 (required by Hugging Face Spaces)
