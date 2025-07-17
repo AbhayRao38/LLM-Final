@@ -5,7 +5,6 @@ import pytesseract
 from PIL import Image
 import io
 import re
-import logging
 from datetime import datetime
 import hashlib
 import json
@@ -15,7 +14,7 @@ class KnowledgeBaseManager:
     Enhanced knowledge base manager with OCR support, validation, and robust error handling.
     """
     
-    def __init__(self, storage_dir="textbooks"):
+    def __init__(self, storage_dir="/tmp/textbooks"): # Changed to /tmp
         self.storage_dir = storage_dir
         self.metadata_file = os.path.join(storage_dir, "metadata.json")
         self.supported_languages = ['eng', 'fra', 'deu', 'spa', 'ita']  # Extend as needed
@@ -27,21 +26,8 @@ class KnowledgeBaseManager:
         # Initialize metadata
         self.metadata = self._load_metadata()
         
-        # Setup logging
-        self._setup_logging()
-        
         # Check OCR availability
         self.ocr_available = self._check_ocr_availability()
-        
-    def _setup_logging(self):
-        """Setup logging for knowledge base operations."""
-        log_file = os.path.join(self.storage_dir, f"kb_operations_{datetime.utcnow().strftime('%Y%m%d')}.log")
-        logging.basicConfig(
-            filename=log_file,
-            level=logging.INFO,
-            format="%(asctime)s [KnowledgeBase] %(levelname)s %(message)s",
-            force=True
-        )
         
     def _check_ocr_availability(self):
         """Check if OCR (Tesseract) is available."""
@@ -64,7 +50,7 @@ class KnowledgeBaseManager:
                 with open(self.metadata_file, 'r', encoding='utf-8') as f:
                     return json.load(f)
             except Exception as e:
-                print(f"Warning: Could not load metadata: {e}")
+                print(f"Warning: Could not load metadata from {self.metadata_file}: {e}")
                 return {}
         return {}
     
@@ -73,8 +59,9 @@ class KnowledgeBaseManager:
         try:
             with open(self.metadata_file, 'w', encoding='utf-8') as f:
                 json.dump(self.metadata, f, indent=2, ensure_ascii=False)
+            print(f"✓ Saved metadata to {self.metadata_file}")
         except Exception as e:
-            print(f"Warning: Could not save metadata: {e}")
+            print(f"Warning: Could not save metadata to {self.metadata_file}: {e}")
     
     def _calculate_file_hash(self, file_path):
         """Calculate SHA-256 hash of file for duplicate detection."""
@@ -85,7 +72,7 @@ class KnowledgeBaseManager:
                     hash_sha256.update(chunk)
             return hash_sha256.hexdigest()
         except Exception as e:
-            logging.error(f"Could not calculate hash for {file_path}: {e}")
+            print(f"Could not calculate hash for {file_path}: {e}")
             return None
     
     def _validate_pdf(self, pdf_path):
@@ -169,7 +156,7 @@ class KnowledgeBaseManager:
                 
         except Exception as e:
             validation_result['errors'].append(f"PDF validation failed: {str(e)}")
-            logging.error(f"PDF validation error for {pdf_path}: {e}")
+            print(f"PDF validation error for {pdf_path}: {e}")
         
         return validation_result
     
@@ -208,7 +195,6 @@ class KnowledgeBaseManager:
         if not validation['valid']:
             error_msg = f"PDF validation failed: {'; '.join(validation['errors'])}"
             print(f"❌ {error_msg}")
-            logging.error(error_msg)
             raise ValueError(error_msg)
         
         # Display validation results
@@ -235,9 +221,8 @@ class KnowledgeBaseManager:
             shutil.copy(pdf_path, dest_path)
             print(f"✓ PDF copied to knowledge base: {filename}")
         except Exception as e:
-            error_msg = f"Failed to copy PDF: {e}"
+            error_msg = f"Failed to copy PDF to {dest_path}: {e}"
             print(f"❌ {error_msg}")
-            logging.error(error_msg)
             raise
         
         # Store metadata
@@ -336,9 +321,9 @@ class KnowledgeBaseManager:
                         print(f"   Processed {extraction_stats['pages_processed']} pages...")
         
         except Exception as e:
-            error_msg = f"Text extraction failed: {e}"
+            error_msg = f"Text extraction failed for {pdf_filename}: {e}"
             print(f"❌ {error_msg}")
-            logging.error(f"Text extraction error for {pdf_filename}: {e}")
+            print(f"Text extraction error for {pdf_filename}: {e}")
             raise
         
         # Update metadata
@@ -363,7 +348,6 @@ class KnowledgeBaseManager:
                 print("💡 Try using OCR: extract_text(filename, use_ocr=True)")
         
         combined_text = "\n".join(text_blocks)
-        logging.info(f"Text extracted from {pdf_filename}: {len(combined_text)} characters")
         
         return combined_text
     
@@ -387,7 +371,7 @@ class KnowledgeBaseManager:
             return text
             
         except Exception as e:
-            logging.error(f"OCR extraction failed: {e}")
+            print(f"OCR extraction failed: {e}")
             return ""
     
     def _clean_extracted_text(self, text):
@@ -501,13 +485,11 @@ class KnowledgeBaseManager:
             self._save_metadata()
             
             print(f"✓ Removed PDF from knowledge base: {pdf_filename}")
-            logging.info(f"Removed PDF: {pdf_filename}")
             return True
             
         except Exception as e:
             error_msg = f"Failed to remove PDF: {e}"
             print(f"❌ {error_msg}")
-            logging.error(error_msg)
             return False
     
     def get_storage_stats(self):

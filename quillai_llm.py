@@ -1,6 +1,5 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-import logging
 import re
 from datetime import datetime
 import numpy as np
@@ -63,7 +62,7 @@ class QuillAILLM:
             ],
             'application': [
                 r'examples?.*of', r'applications?.*of', r'uses?.*of',
-                r'real.*world', r'practical.*use', r'implement'
+                r'real.*world', r'practical.*use', 'implement'
             ]
         }
         
@@ -157,18 +156,6 @@ class QuillAILLM:
                 self.model.eval()
             else:
                 raise e
-
-        # Setup logging with current user context
-        log_filename = f"quillai_llm_{datetime.utcnow().strftime('%Y%m%d')}.log"
-        logging.basicConfig(
-            filename=log_filename,
-            level=logging.INFO,
-            format="%(asctime)s [AbhayRao38] %(levelname)s %(message)s",
-            force=True
-        )
-        logging.info(f"Model {model_name} loaded on {self.device}")
-        logging.info(f"User: AbhayRao38, Session start: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC")
-        logging.info(f"Actual model path: {actual_model_name}")
 
     # NEW: Intent Detection System
     def detect_query_intent(self, query):
@@ -1108,7 +1095,6 @@ class QuillAILLM:
 
         except Exception as e:
             logs.append(f"Exception occurred: {repr(e)}")
-            logging.error(f"Generation error for user AbhayRao38: {repr(e)}")
             
             # Fallback
             return self._generate_expanded_response(query, mode, marks, target_words, selected_context)
@@ -1743,17 +1729,15 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
         # Only return chunks with positive scores
         return [chunk for chunk in ranked_chunks if score_chunk(chunk) > 0]
 
+    
     def _write_logs(self, logs):
-        """Append logs to session log file with user context."""
-        try:
-            session_log = f"quillai_llm_session_{datetime.utcnow().strftime('%Y%m%d')}.log"
-            with open(session_log, "a", encoding="utf-8") as logf:
-                logf.write(f"\n{'='*20} AbhayRao38 {datetime.utcnow().strftime('%H:%M:%S')} {'='*20}\n")
-                logf.write("\n".join(logs))
-                logf.write("\n" + "=" * 80 + "\n")
-                logf.flush()  # FIXED: Added flush for real-time log inspection
-        except Exception as e:
-            print(f"Warning: Could not write logs: {e}")
+        """Print logs to standard output."""
+        # As per requirements, avoiding file-based logging at runtime.
+        # All logs will now go to stdout/stderr, which is captured by container logs.
+        print(f"\n{'='*20} AbhayRao38 {datetime.utcnow().strftime('%H:%M:%S')} {'='*20}")
+        for log_line in logs:
+            print(log_line)
+        print("=" * 80 + "\n")
 
     def get_model_info(self):
         """Return information about the loaded model."""
@@ -2063,6 +2047,191 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
                     response += '.'
         
         return response
+
+    def _generate_divide_conquer_response(self, mode, target_words):
+        """Generate divide and conquer specific response."""
+        base_response = {
+            'definition': "Divide and conquer is a fundamental algorithmic paradigm that solves complex problems by recursively breaking them into smaller, more manageable subproblems, solving each independently, and combining their solutions.",
+            'characteristics': [
+                "Recursive decomposition of problems into smaller subproblems",
+                "Independent solution of subproblems using the same approach",
+                "Efficient combination of subproblem solutions",
+                "Optimal substructure property enabling recursive solutions",
+                "Logarithmic depth recursion leading to efficient time complexity"
+            ],
+            'examples': [
+                "Merge Sort: Divides array into halves, sorts recursively, then merges",
+                "Quick Sort: Partitions around pivot, sorts subarrays recursively",
+                "Binary Search: Eliminates half the search space at each step",
+                "Fast Fourier Transform: Decomposes signal processing into smaller transforms"
+            ],
+            'applications': [
+                "Sorting algorithms: Merge sort, quick sort for efficient data organization",
+                "Search algorithms: Binary search for logarithmic time complexity",
+                "Mathematical computations: Fast multiplication, matrix operations",
+                "Computer graphics: Fractal generation, image processing algorithms"
+            ]
+        }
+        return self._format_academic_response(base_response, mode, target_words, "Divide and Conquer")
+
+    def _generate_complexity_response(self, mode, target_words):
+        """Generate algorithmic complexity specific response."""
+        base_response = {
+            'definition': "Algorithmic complexity analysis evaluates the computational resources required by algorithms, primarily focusing on time complexity (execution time) and space complexity (memory usage) as functions of input size.",
+            'characteristics': [
+                "Big O notation for upper bound analysis of algorithm performance",
+                "Time complexity measuring execution time relative to input size",
+                "Space complexity measuring memory usage during algorithm execution",
+                "Best, average, and worst-case scenario analysis",
+                "Asymptotic analysis for large input size behavior"
+            ],
+            'examples': [
+                "O(1): Constant time operations like array access, hash table lookup",
+                "O(log n): Binary search, balanced tree operations",
+                "O(n): Linear search, single array traversal",
+                "O(n²): Bubble sort, nested loop algorithms"
+            ],
+            'applications': [
+                "Algorithm selection: Choosing optimal algorithms for specific problems",
+                "Performance optimization: Identifying bottlenecks in software systems",
+                "System design: Scalability analysis for large-scale applications",
+                "Resource planning: Memory and processing time estimation"
+            ]
+        }
+        return self._format_academic_response(base_response, mode, target_words, "Algorithmic Complexity")
+
+    def _generate_greedy_response(self, mode, target_words):
+        """Generate greedy algorithms specific response."""
+        base_response = {
+            'definition': "Greedy algorithms make locally optimal choices at each step, selecting the best immediate option without considering global consequences, often leading to globally optimal solutions for specific problem types.",
+            'characteristics': [
+                "Local optimization strategy making best immediate choices",
+                "No backtracking or reconsideration of previous decisions",
+                "Greedy choice property ensuring local optimality leads to global optimality",
+                "Optimal substructure allowing combination of optimal subproblem solutions",
+                "Efficient implementation with typically linear or logarithmic complexity"
+            ],
+            'examples': [
+                "Dijkstra's algorithm: Shortest path by selecting minimum distance vertices",
+                "Huffman coding: Optimal prefix codes by merging least frequent symbols",
+                "Activity selection: Maximum activities by choosing earliest finishing times",
+                "Fractional knapsack: Maximum value by selecting highest value-to-weight ratios"
+            ],
+            'applications': [
+                "Network routing: Finding shortest paths in communication networks",
+                "Data compression: Creating efficient encoding schemes",
+                "Scheduling problems: Optimizing resource allocation and task ordering",
+                "Graph algorithms: Minimum spanning trees, shortest path problems"
+            ]
+        }
+        return self._format_academic_response(base_response, mode, target_words, "Greedy Algorithms")
+
+    def _generate_dp_response(self, mode, target_words):
+        """Generate dynamic programming specific response."""
+        base_response = {
+            'definition': "Dynamic programming is an algorithmic technique that solves complex problems by breaking them into overlapping subproblems, storing solutions to avoid redundant calculations, and building up solutions systematically.",
+            'characteristics': [
+                "Optimal substructure property enabling combination of optimal subproblem solutions",
+                "Overlapping subproblems requiring memoization to avoid redundant computation",
+                "Bottom-up or top-down approach for systematic solution construction",
+                "State space definition representing problem configurations",
+                "Recurrence relation expressing problem in terms of smaller subproblems"
+            ],
+            'examples': [
+                "Fibonacci sequence: Avoiding exponential recursion through memoization",
+                "Longest common subsequence: Finding optimal alignment between sequences",
+                "Knapsack problem: Optimizing item selection within weight constraints",
+                "Edit distance: Minimum operations to transform one string to another"
+            ],
+            'applications': [
+                "Optimization problems: Resource allocation, scheduling, path finding",
+                "Bioinformatics: Sequence alignment, protein folding prediction",
+                "Economics: Portfolio optimization, resource management",
+                "Computer graphics: Image processing, pattern recognition algorithms"
+            ]
+        }
+        return self._format_academic_response(base_response, mode, target_words, "Dynamic Programming")
+
+    def _generate_sorting_response(self, mode, target_words):
+        """Generate sorting algorithms specific response."""
+        base_response = {
+            'definition': "Sorting algorithms arrange data elements in a specific order (ascending or descending) using various strategies, each with different time and space complexity characteristics suitable for different scenarios.",
+            'characteristics': [
+                "Comparison-based or non-comparison-based sorting strategies",
+                "Stable sorting preserving relative order of equal elements",
+                "In-place sorting minimizing additional memory requirements",
+                "Adaptive algorithms performing better on partially sorted data",
+                "Time complexity ranging from O(n log n) to O(n²) depending on algorithm"
+            ],
+            'examples': [
+                "Quick Sort: Divide-and-conquer with average O(n log n) complexity",
+                "Merge Sort: Stable divide-and-conquer with guaranteed O(n log n)",
+                "Heap Sort: Selection-based sorting using binary heap data structure",
+                "Bubble Sort: Simple comparison-based algorithm with O(n²) complexity"
+            ],
+            'applications': [
+                "Database systems: Query optimization, index maintenance, result ordering",
+                "Search algorithms: Preprocessing data for efficient binary search",
+                "Data analysis: Statistical computations, median finding, percentile calculations",
+                "Graphics processing: Z-buffer sorting, polygon rendering order"
+            ]
+        }
+        return self._format_academic_response(base_response, mode, target_words, "Sorting Algorithms")
+
+    def _generate_searching_response(self, mode, target_words):
+        """Generate search algorithms specific response."""
+        base_response = {
+            'definition': "Search algorithms locate specific elements or patterns within data structures, employing various strategies to efficiently traverse and examine data to find target information.",
+            'characteristics': [
+                "Linear search examining elements sequentially until target found",
+                "Binary search utilizing sorted data for logarithmic time complexity",
+                "Hash-based search providing average constant time access",
+                "Tree-based search leveraging hierarchical data organization",
+                "Graph search algorithms for pathfinding and connectivity analysis"
+            ],
+            'examples': [
+                "Binary Search: Logarithmic search in sorted arrays",
+                "Depth-First Search: Graph traversal exploring paths completely",
+                "Breadth-First Search: Level-by-level graph exploration",
+                "Hash Table Lookup: Constant time average case search"
+            ],
+            'applications': [
+                "Database systems: Record retrieval, index searching, query processing",
+                "Web search engines: Document indexing, relevance ranking",
+                "Artificial intelligence: State space search, pathfinding algorithms",
+                "Network routing: Finding optimal paths in communication networks"
+            ]
+        }
+        return self._format_academic_response(base_response, mode, target_words, "Search Algorithms")
+
+    def _generate_enhanced_generic_response(self, query, mode, target_words, specific_subtopic):
+        """Generate enhanced generic response with better topic handling."""
+        topic = specific_subtopic or "Academic Topic"
+        
+        base_response = {
+            'definition': f"{topic.title()} represents a specialized area of study within its academic domain, encompassing specific principles, methodologies, and practical applications that contribute to broader understanding and professional development.",
+            'characteristics': [
+                "Systematic theoretical framework providing foundational understanding",
+                "Evidence-based methodologies ensuring reliable and reproducible results",
+                "Practical applications demonstrating real-world relevance and utility",
+                "Continuous evolution through ongoing research and technological advancement",
+                "Interdisciplinary connections enhancing broader academic and professional impact"
+            ],
+            'examples': [
+                f"Theoretical applications: Fundamental principles underlying {topic.lower()} concepts",
+                f"Practical implementations: Real-world applications of {topic.lower()} in industry",
+                f"Research developments: Contemporary advances in {topic.lower()} methodology",
+                f"Educational applications: {topic.title()} in academic curricula and professional training"
+            ],
+            'applications': [
+                "Academic research: Contributing to knowledge advancement and scholarly publication",
+                "Industry practice: Professional application in commercial and technical contexts",
+                "Educational development: Curriculum design and instructional methodology",
+                "Innovation and development: Driving technological progress and solution creation"
+            ]
+        }
+        
+        return self._format_academic_response(base_response, mode, target_words, topic.title())
 
 # === Test and demonstration ===
 if __name__ == "__main__":

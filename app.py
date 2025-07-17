@@ -5,7 +5,6 @@ from datetime import datetime
 from knowledgebase import KnowledgeBaseManager
 from retrieval import RetrievalAugmentor
 import quillai_llm
-import logging
 import re
 
 print(f"✅ Loaded Enhanced QuillAILLM from: {quillai_llm.__file__}")
@@ -33,6 +32,7 @@ class QueryResponse(BaseModel):
     timestamp: str
     error_message: Optional[str] = None
 
+# This function will now be called once at API server startup
 def initialize_api_components():
     """Initialize LLM and retrieval components for API use."""
     try:
@@ -43,7 +43,7 @@ def initialize_api_components():
             debug_mode=False
         )
         
-        # Initialize retrieval system
+        # Initialize retrieval system (will use /tmp paths from retrieval.py)
         retrieval_system = RetrievalAugmentor(
             chunk_size=400,
             chunk_overlap=50
@@ -56,12 +56,15 @@ def initialize_api_components():
         print(f"❌ Failed to initialize API components: {e}")
         raise
 
-def process_api_query(request) -> dict:
+# Modified to accept pre-initialized LLM and retrieval_system instances
+def process_api_query(request, llm: QuillAILLM, retrieval_system: RetrievalAugmentor) -> dict:
     """
     Process API query and return dual outputs.
     
     Args:
         request: Query request object with query, mode, marks attributes
+        llm: Pre-initialized QuillAILLM instance
+        retrieval_system: Pre-initialized RetrievalAugmentor instance
         
     Returns:
         dict: Response with dual outputs and metadata
@@ -71,8 +74,7 @@ def process_api_query(request) -> dict:
     start_time = datetime.utcnow()
     
     try:
-        # Initialize components
-        llm, retrieval_system = initialize_api_components()
+        # Components are now passed in, no re-initialization here
         
         # Detect query intent and domain
         intent, intent_confidence, all_intents = llm.detect_query_intent(request.query)
@@ -141,71 +143,17 @@ ENHANCED Main application script with comprehensive solutions:
 2. Robust PDF Processing with OCR Support  
 3. Intelligent Chunking and Context Retrieval
 4. Enhanced Error Handling and Validation
-5. Comprehensive Logging and Monitoring
-6. Multi-domain Academic Support
-7. Semantic Understanding and Reranking
+5. Multi-domain Academic Support
+6. Semantic Understanding and Reranking
 
 Author: AbhayRao38
 Date: 2025-07-08
 Version: Production-Ready Enhanced System
 """
 
-def setup_comprehensive_logging(args):
-    """Setup comprehensive logging system for queries, errors, and analytics."""
-    import logging
-    from datetime import datetime
-    import os
-
-    # Create logs directory if it doesn't exist
-    if not os.path.exists('logs'):
-        os.makedirs('logs')
-
-    # Setup multiple log files for different purposes
-    timestamp = datetime.utcnow().strftime('%Y%m%d')
-
-    # Main application log
-    app_log_file = f'logs/quillai_app_{timestamp}.log'
-
-    # Query analytics log
-    query_log_file = f'logs/query_analytics_{timestamp}.log'
-
-    # Error tracking log
-    error_log_file = f'logs/error_tracking_{timestamp}.log'
-
-    # Configure main logger
-    logging.basicConfig(
-        level=logging.INFO if not args.debug else logging.DEBUG,
-        format='%(asctime)s [%(levelname)s] %(message)s',
-        handlers=[
-            logging.FileHandler(app_log_file, encoding='utf-8'),
-            logging.StreamHandler() if args.verbose else logging.NullHandler()
-        ]
-    )
-
-    # Create specialized loggers
-    query_logger = logging.getLogger('query_analytics')
-    query_handler = logging.FileHandler(query_log_file, encoding='utf-8')
-    query_handler.setFormatter(logging.Formatter('%(asctime)s [QUERY] %(message)s'))
-    query_logger.addHandler(query_handler)
-    query_logger.setLevel(logging.INFO)
-
-    error_logger = logging.getLogger('error_tracking')
-    error_handler = logging.FileHandler(error_log_file, encoding='utf-8')
-    error_handler.setFormatter(logging.Formatter('%(asctime)s [ERROR] %(message)s'))
-    error_logger.addHandler(error_handler)
-    error_logger.setLevel(logging.ERROR)
-
-    # Log session start
-    logging.info(f"=== QuillAI Session Started ===")
-    logging.info(f"User: AbhayRao38")
-    logging.info(f"Arguments: {vars(args)}")
-    logging.info(f"Session ID: {datetime.utcnow().strftime('%Y%m%d_%H%M%S')}")
-
-    if args.verbose:
-        print(f"📊 Logging initialized:")
-        print(f"   App log: {app_log_file}")
-        print(f"   Query analytics: {query_log_file}")
-        print(f"   Error tracking: {error_log_file}")
+# The following functions are part of the CLI interface (if __name__ == "__main__")
+# and are not directly used by the FastAPI server.
+# Their initialization logic for KB/Retrieval should also be updated to use /tmp paths.
 
 def print_enhanced_header(args):
     """Print enhanced header with session information."""
@@ -265,9 +213,7 @@ def validate_enhanced_arguments(args):
 
 def route_and_process_query(args):
     """Intelligent routing based on query intent detection."""
-    import logging
-
-    logging.info(f"Processing query: {args.query}")
+    print(f"Processing query: {args.query}")
 
     # Initialize LLM for intent detection
     try:
@@ -278,14 +224,6 @@ def route_and_process_query(args):
         # NEW: Detect query intent and route accordingly
         intent, intent_confidence, all_intents = quillai_llm.detect_query_intent(args.query)
         domain, topics, domain_confidence = quillai_llm.detect_domain_and_topic(args.query)
-        
-        # Log query analytics
-        query_logger = logging.getLogger('query_analytics')
-        query_logger.info(f"Query: {args.query}")
-        query_logger.info(f"Intent: {intent}")
-        query_logger.info(f"Domain: {domain}")
-        query_logger.info(f"Topics: {topics}")
-        query_logger.info(f"All intents: {all_intents}")
         
         print(f"🧠 Query Analysis:")
         print(f"   Intent: {intent.upper()}")
@@ -308,9 +246,7 @@ def route_and_process_query(args):
 
 def handle_question_generation_route(args, llm, intent, domain, topics):
     """Handle question generation with specialized processing."""
-    import logging
-
-    logging.info(f"Routing to question generation handler")
+    print(f"Routing to question generation handler")
     print(f"📝 Detected: Question Generation Request")
     print(f"   Optimizing for educational content creation...")
 
@@ -332,9 +268,7 @@ def handle_question_generation_route(args, llm, intent, domain, topics):
 
 def handle_rubric_creation_route(args, llm, intent, domain, topics):
     """Handle rubric creation with specialized processing."""
-    import logging
-
-    logging.info(f"Routing to rubric creation handler")
+    print(f"Routing to rubric creation handler")
     print(f"📋 Detected: Rubric Creation Request")
     print(f"   Optimizing for assessment criteria generation...")
 
@@ -350,9 +284,7 @@ def handle_rubric_creation_route(args, llm, intent, domain, topics):
 
 def handle_summary_request_route(args, llm, intent, domain, topics):
     """Handle summary requests with context emphasis."""
-    import logging
-
-    logging.info(f"Routing to summary request handler")
+    print(f"Routing to summary request handler")
     print(f"📄 Detected: Summary Request")
     print(f"   Prioritizing context retrieval for summarization...")
 
@@ -374,9 +306,7 @@ def handle_summary_request_route(args, llm, intent, domain, topics):
 
 def handle_standard_qa_route(args, llm, intent, domain, topics):
     """Handle standard Q&A with optimized processing."""
-    import logging
-
-    logging.info(f"Routing to standard Q&A handler")
+    print(f"Routing to standard Q&A handler")
     print(f"❓ Detected: Standard Q&A Request")
     print(f"   Intent: {intent}, Domain: {domain}")
 
@@ -391,19 +321,7 @@ def handle_standard_qa_route(args, llm, intent, domain, topics):
 
 def handle_critical_error(operation, error, args):
     """Handle critical errors with comprehensive logging and user feedback."""
-    import logging
     import traceback
-
-    error_logger = logging.getLogger('error_tracking')
-
-    # Log detailed error information
-    error_logger.error(f"=== CRITICAL ERROR ===")
-    error_logger.error(f"Operation: {operation}")
-    error_logger.error(f"Error: {str(error)}")
-    error_logger.error(f"User: AbhayRao38")
-    error_logger.error(f"Query: {getattr(args, 'query', 'N/A')}")
-    error_logger.error(f"Arguments: {vars(args)}")
-    error_logger.error(f"Traceback: {traceback.format_exc()}")
 
     # User-friendly error display
     print(f"\n❌ Critical Error in {operation}")
@@ -478,14 +396,11 @@ def handle_non_query_operations(args):
 
 def handle_pdf_addition(args):
     """Handle PDF addition with comprehensive feedback and error surfacing."""
-    import logging
-
-    logging.info(f"Starting PDF addition: {args.pdf}")
+    print(f"Starting PDF addition: {args.pdf}")
     print(f"📄 Processing PDF: {args.pdf}")
 
     if not os.path.exists(args.pdf):
         error_msg = f"PDF file not found: {args.pdf}"
-        logging.error(error_msg)
         print(f"❌ Error: {error_msg}")
         print(f"💡 Troubleshooting:")
         print(f"   • Check file path spelling")
@@ -496,7 +411,7 @@ def handle_pdf_addition(args):
     try:
         # Initialize knowledge base with enhanced feedback
         print(f"🔄 Initializing knowledge base...")
-        kb_manager = KnowledgeBaseManager(storage_dir="textbooks")
+        kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
         
         # Add PDF with progress tracking
         print(f"🔄 Adding PDF to knowledge base...")
@@ -506,7 +421,6 @@ def handle_pdf_addition(args):
             language=args.pdf_language
         )
         
-        logging.info(f"PDF added successfully: {args.pdf}")
         print(f"✅ PDF processed successfully")
         
         # Enhanced indexing with feedback
@@ -522,14 +436,12 @@ def handle_pdf_addition(args):
                 force_rebuild=args.force_rebuild
             )
             
-            logging.info(f"PDF indexed successfully: {args.pdf}")
             print(f"✅ Search index built successfully")
             
             # Display index statistics
             retrieval_system.print_index_stats()
             
         except Exception as index_error:
-            logging.warning(f"PDF indexing failed: {str(index_error)}")
             print(f"⚠️  Warning: Could not build search index")
             print(f"   Error: {str(index_error)}")
             print(f"   PDF added but search functionality limited")
@@ -538,8 +450,6 @@ def handle_pdf_addition(args):
         print(f"📚 Suggested next steps:")
         print(f'   python app.py --mode learning --query "Summarize key concepts"')
         print(f'   python app.py --mode question --marks 5 --query "Main topics"')
-        
-        logging.info(f"PDF processing completed successfully: {args.pdf}")
         
     except Exception as e:
         handle_critical_error("PDF addition", e, args)
@@ -554,7 +464,7 @@ def handle_pdf_addition(args):
 def handle_kb_management(args):
     """Handle knowledge base management operations."""
     try:
-        kb_manager = KnowledgeBaseManager(storage_dir="textbooks")
+        kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
         
         if args.list_pdfs:
             kb_manager.list_pdfs()
@@ -592,7 +502,7 @@ def handle_source_removal(args):
             print("✅ Source removed from retrieval index")
         
         # Remove from knowledge base
-        kb_manager = KnowledgeBaseManager(storage_dir="textbooks")
+        kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
         if kb_manager.remove_pdf(args.remove_source):
             print("✅ Source removed from knowledge base")
         
@@ -786,8 +696,6 @@ def generate_and_display_enhanced_answer(llm, args, context_chunks):
         
         print("="*80)
         
-        log_session_analytics(args, {'word_counts': word_count, 'generation_times': generation_time})
-        
     except Exception as e:
         handle_critical_error("Generating answer", e, args)
 
@@ -874,13 +782,13 @@ def run_pdf_processing_tests(args):
     print("=" * 60)
 
     try:
-        kb_manager = KnowledgeBaseManager(storage_dir="test_textbooks")
+        kb_manager = KnowledgeBaseManager(storage_dir="/tmp/test_textbooks") # Changed to /tmp
         
         # Test PDF validation
         print("1. Testing PDF validation...")
         
         # Create a dummy test file for validation testing
-        test_file = "test_dummy.txt"
+        test_file = "/tmp/test_dummy.txt" # Changed to /tmp
         with open(test_file, "w") as f:
             f.write("This is a test file")
         
@@ -1072,28 +980,6 @@ def run_enhanced_benchmark_tests(args):
             import traceback
             traceback.print_exc()
 
-def log_session_analytics(args, results=None):
-    """Log comprehensive session analytics."""
-    import logging
-    from datetime import datetime
-
-    query_logger = logging.getLogger('query_analytics')
-
-    # Session summary
-    query_logger.info(f"=== SESSION SUMMARY ===")
-    query_logger.info(f"User: AbhayRao38")
-    query_logger.info(f"Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} UTC")
-    query_logger.info(f"Mode: {getattr(args, 'mode', 'N/A')}")
-    query_logger.info(f"Marks: {getattr(args, 'marks', 'N/A')}")
-    query_logger.info(f"Context enabled: {not getattr(args, 'no_context', False)}")
-
-    if results:
-        query_logger.info(f"Generation successful: True")
-        query_logger.info(f"Word counts: {results.get('word_counts', 'N/A')}")
-        query_logger.info(f"Generation times: {results.get('generation_times', 'N/A')}")
-
-    query_logger.info(f"=== END SESSION ===")
-
 def show_enhanced_usage_examples():
     """Show comprehensive usage examples."""
     print("\n💡 Enhanced Usage Examples:")
@@ -1214,9 +1100,6 @@ def main():
 
     args = parser.parse_args()
 
-    # Initialize comprehensive logging system
-    setup_comprehensive_logging(args)
-
     # Print header with user context
     print_enhanced_header(args)
 
@@ -1225,6 +1108,8 @@ def main():
 
     # Route and process query or handle other operations
     if args.query:
+        # Note: The CLI part of app.py still initializes components per-run.
+        # For API, this is handled by api_server.py's startup event.
         route_and_process_query(args)
     else:
         handle_non_query_operations(args)

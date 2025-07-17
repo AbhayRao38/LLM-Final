@@ -5,16 +5,19 @@ from typing import Optional, List
 import shutil
 import os
 from datetime import datetime
-import logging
 import sys
 
 # Add the current directory to Python path to import local modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # Import your existing modules
-from app import process_api_query, initialize_api_components
-from knowledgebase import KnowledgeBaseManager
+# Directly import QuillAILLM and RetrievalAugmentor for type hinting
+from quillai_llm import QuillAILLM
 from retrieval import RetrievalAugmentor
+from knowledgebase import KnowledgeBaseManager
+
+# Import functions from app.py
+from app import process_api_query, initialize_api_components
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -59,6 +62,7 @@ class QueryRequest(BaseModel):
             'mode': 'learning' if self.mode == 0 else 'question',  # Convert int to string
             'marks': self.marks if self.marks > 0 else None  # Convert 0 to None for learning mode
         }
+
 # Pydantic models for additional endpoints
 class PDFUploadResponse(BaseModel):
     success: bool
@@ -71,22 +75,20 @@ class SystemStatsResponse(BaseModel):
     retrieval_index: dict
     timestamp: str
 
-# Global initialization
+# Global instances for LLM and Retrieval System, initialized once at startup
+llm_instance: Optional[QuillAILLM] = None
+retrieval_instance: Optional[RetrievalAugmentor] = None
+
 @app.on_event("startup")
 async def startup_event():
     """Initialize components on server startup."""
+    global llm_instance, retrieval_instance # Declare global to modify them
     try:
         print("🚀 Starting QuillAI API Server...")
-        print("🤖 Initializing AI components...")
+        print("🤖 Initializing AI components (this may take a moment)...")
         
-        # Initialize components
-        llm, retrieval = initialize_api_components()
-        
-        # Setup logging
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(asctime)s [API] %(levelname)s %(message)s"
-        )
+        # Initialize components once and store them globally
+        llm_instance, retrieval_instance = initialize_api_components()
         
         print("✅ QuillAI API Server ready!")
         print("📖 API Documentation: http://localhost:8000/docs")
@@ -94,6 +96,7 @@ async def startup_event():
         
     except Exception as e:
         print(f"❌ Startup failed: {e}")
+        # Re-raise the exception to prevent the server from starting in a broken state
         raise
 
 # Main query endpoint - the heart of your API
@@ -104,6 +107,10 @@ async def process_query(request: QueryRequest):
     
     This is the main endpoint your Flutter app will call.
     """
+    # Ensure components are initialized before processing requests
+    if llm_instance is None or retrieval_instance is None:
+        raise HTTPException(status_code=503, detail="AI components not initialized. Server is still starting up or failed to initialize.")
+
     try:
         print(f"📝 Processing query: {request.prompt[:50]}...")
         
@@ -112,14 +119,11 @@ async def process_query(request: QueryRequest):
             raise HTTPException(status_code=400, detail="Query cannot be empty")
         
         # Convert frontend format to internal format
-        internal_request = request.to_internal_format()
-        
-        # Create internal QueryRequest object
         from types import SimpleNamespace
-        internal_query_obj = SimpleNamespace(**internal_request)
+        internal_query_obj = SimpleNamespace(**request.to_internal_format())
         
-        # Process the query
-        result = process_api_query(internal_query_obj)
+        # Process the query, passing the initialized instances
+        result = process_api_query(internal_query_obj, llm_instance, retrieval_instance)
         
         if not result["success"]:
             raise HTTPException(status_code=500, detail=result["error_message"])
@@ -139,7 +143,7 @@ async def process_query(request: QueryRequest):
         }
         
         # Log successful request
-        logging.info(f"Successful query: {request.prompt[:100]}, Intent: {result.get('intent', 'unknown')}, Domain: {result.get('domain', 'unknown')}")
+        print(f"Successful query: {request.prompt[:100]}, Intent: {result.get('intent', 'unknown')}, Domain: {result.get('domain', 'unknown')}")
         
         return frontend_response
         
@@ -147,7 +151,7 @@ async def process_query(request: QueryRequest):
         raise
     except Exception as e:
         error_msg = f"Internal server error: {str(e)}"
-        logging.error(error_msg)
+        print(f"❌ {error_msg}")
         raise HTTPException(status_code=500, detail=error_msg)
 
 # PDF upload endpoint
@@ -169,8 +173,8 @@ async def upload_pdf(
                 error_message="File must be a PDF"
             )
         
-        # Save uploaded file
-        upload_dir = "uploaded_pdfs"
+        # Save uploaded file to /tmp
+        upload_dir = "/tmp/uploaded_pdfs" # Changed to /tmp
         os.makedirs(upload_dir, exist_ok=True)
         
         file_path = os.path.join(upload_dir, file.filename)
@@ -201,13 +205,13 @@ async def upload_pdf(
 def process_uploaded_pdf(file_path: str, filename: str, use_ocr: bool, language: str):
     """Background task to process uploaded PDF."""
     try:
-        # Initialize knowledge base
-        kb_manager = KnowledgeBaseManager(storage_dir="textbooks")
+        # Initialize knowledge base with /tmp storage
+        kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
         
         # Add PDF to knowledge base
         kb_manager.add_pdf(file_path, force_ocr=use_ocr, language=language)
         
-        # Build search index
+        # Build search index with /tmp paths (defaults in retrieval.py)
         retrieval_system = RetrievalAugmentor(chunk_size=400, chunk_overlap=50)
         retrieval_system.build_or_update_index_from_pdf(
             file_path,
@@ -218,10 +222,10 @@ def process_uploaded_pdf(file_path: str, filename: str, use_ocr: bool, language:
         # Clean up uploaded file
         os.remove(file_path)
         
-        logging.info(f"Successfully processed uploaded PDF: {filename}")
+        print(f"Successfully processed uploaded PDF: {filename}")
         
     except Exception as e:
-        logging.error(f"Failed to process uploaded PDF {filename}: {e}")
+        print(f"Failed to process uploaded PDF {filename}: {e}")
 
 # System statistics endpoint
 @app.get("/stats", response_model=SystemStatsResponse)
@@ -230,11 +234,11 @@ async def get_system_stats():
     Get comprehensive system statistics.
     """
     try:
-        # Knowledge base stats
-        kb_manager = KnowledgeBaseManager(storage_dir="textbooks")
+        # Knowledge base stats with /tmp storage
+        kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
         kb_stats = kb_manager.get_storage_stats()
         
-        # Retrieval index stats
+        # Retrieval index stats (defaults in retrieval.py)
         retrieval_system = RetrievalAugmentor(chunk_size=400, chunk_overlap=50)
         index_stats = retrieval_system.get_index_stats()
         
@@ -267,6 +271,7 @@ async def search_knowledge_base(query: str, max_results: int = 5):
     Search the knowledge base for debugging purposes.
     """
     try:
+        # Retrieval system (defaults in retrieval.py)
         retrieval_system = RetrievalAugmentor(chunk_size=400, chunk_overlap=50)
         results = retrieval_system.search_chunks(query, max_results=max_results)
         

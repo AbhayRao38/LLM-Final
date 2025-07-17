@@ -1,3 +1,0 @@
-2025-07-15 10:55:46,428 [PERF] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] Operation: Query Processing
-2025-07-15 10:55:46,428 [PERF] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] Duration: 17.72s
-2025-07-15 10:55:46,429 [PERF] [3a5c593d-3ea2-402a-a9b6-da6b8012592b] Metadata: {'intent': 'definition', 'domain': 'general', 'context_chunks': 0, 'response_length': 31}

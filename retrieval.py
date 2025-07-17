@@ -4,7 +4,6 @@ import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import re
-import logging
 from datetime import datetime
 import json
 import pickle
@@ -14,6 +13,14 @@ from collections import Counter
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 
+# Ensure NLTK data path is set to the writable /tmp directory
+# This must be done before importing stopwords if they are not in default paths
+if 'NLTK_DATA' in os.environ:
+    nltk.data.path.append(os.environ['NLTK_DATA'])
+else:
+    # Fallback or default if NLTK_DATA env var is not set (e.g., local dev)
+    nltk.data.path.append('/tmp/nltk_data') # Ensure this is a writable path
+
 class RetrievalAugmentor:
     """
     Enhanced retrieval system with intelligent chunking, semantic reranking, 
@@ -22,8 +29,8 @@ class RetrievalAugmentor:
     
     def __init__(self, 
                  model_name="sentence-transformers/all-MiniLM-L6-v2",
-                 index_path="faiss_index.bin", 
-                 metadata_path="metadata.json",
+                 index_path="/tmp/faiss_index.bin", # Changed to /tmp
+                 metadata_path="/tmp/metadata.json", # Changed to /tmp
                  chunk_size=400,
                  chunk_overlap=50):
         """
@@ -53,25 +60,29 @@ class RetrievalAugmentor:
         # Initialize stopwords
         try:
             self.stop_words = set(stopwords.words('english'))
-        except Exception:
+            print("✓ NLTK stopwords loaded successfully")
+        except Exception as e:
             self.stop_words = set()
-            print("⚠ Could not load stopwords - using empty set")
+            print(f"⚠ Could not load stopwords - using empty set: {e}")
+            print("   Ensure NLTK data (stopwords) is downloaded to a writable location like /tmp/nltk_data")
         
+        # Ensure the directory for index and metadata exists
+        os.makedirs(os.path.dirname(self.index_path), exist_ok=True)
+        os.makedirs(os.path.dirname(self.metadata_path), exist_ok=True)
+
         # Load existing index and metadata
         if os.path.exists(self.index_path) and os.path.exists(self.metadata_path):
             try:
                 self.index = faiss.read_index(self.index_path)
                 with open(self.metadata_path, "r", encoding="utf-8") as f:
                     self.metadata = json.load(f)
-                print(f"✓ Loaded existing index with {len(self.metadata)} chunks")
+                print(f"✓ Loaded existing index with {len(self.metadata)} chunks from {self.index_path}")
             except Exception as e:
-                print(f"⚠ Could not load existing index: {e}")
+                print(f"⚠ Could not load existing index from {self.index_path}: {e}")
                 self._initialize_new_index()
         else:
+            print(f"No existing index found at {self.index_path}. Initializing new index.")
             self._initialize_new_index()
-        
-        # Setup logging
-        self._setup_logging()
         
         # Statistics
         self.stats = {
@@ -85,16 +96,6 @@ class RetrievalAugmentor:
         self.index = None
         self.metadata = []
         print("✓ Initialized new empty index")
-    
-    def _setup_logging(self):
-        """Setup logging for retrieval operations."""
-        log_file = f"retrieval_operations_{datetime.utcnow().strftime('%Y%m%d')}.log"
-        logging.basicConfig(
-            filename=log_file,
-            level=logging.INFO,
-            format="%(asctime)s [Retrieval] %(levelname)s %(message)s",
-            force=True
-        )
     
     def build_or_update_index_from_pdf(self, pdf_path, source_name=None, force_rebuild=False):
         """
@@ -161,12 +162,9 @@ class RetrievalAugmentor:
             # Update statistics
             self.stats['total_chunks'] = len(self.metadata)
             
-            logging.info(f"Indexed PDF: {source_name}, {len(chunks)} chunks, {len(raw_text)} characters")
-            
         except Exception as e:
             error_msg = f"Failed to index PDF {source_name}: {e}"
             print(f"❌ {error_msg}")
-            logging.error(error_msg)
             raise
     
     def _extract_text_from_pdf(self, pdf_path):
@@ -183,10 +181,10 @@ class RetrievalAugmentor:
                         if page_text.strip():
                             text_blocks.append(page_text)
                     except Exception as e:
-                        logging.warning(f"Could not extract text from page {page_num + 1}: {e}")
+                        print(f"Could not extract text from page {page_num + 1}: {e}")
                         continue
         except Exception as e:
-            logging.error(f"Could not open PDF {pdf_path}: {e}")
+            print(f"Could not open PDF {pdf_path}: {e}")
             raise
         
         return "\n".join(text_blocks)
@@ -296,7 +294,7 @@ class RetrievalAugmentor:
                     chunks.append(chunk_metadata)
             
         except Exception as e:
-            logging.warning(f"Intelligent chunking failed: {e}, falling back to simple chunking")
+            print(f"Intelligent chunking failed: {e}, falling back to simple chunking")
             return self._create_simple_chunks(text, source_name)
         
         return chunks
@@ -412,7 +410,7 @@ class RetrievalAugmentor:
             )
             return embeddings
         except Exception as e:
-            logging.error(f"Failed to generate embeddings: {e}")
+            print(f"Failed to generate embeddings: {e}")
             return None
     
     def _update_index_with_chunks(self, chunks, embeddings):
@@ -445,10 +443,10 @@ class RetrievalAugmentor:
             with open(self.metadata_path, "w", encoding="utf-8") as f:
                 json.dump(self.metadata, f, indent=2, ensure_ascii=False)
             
-            print(f"✓ Saved index and metadata")
+            print(f"✓ Saved index and metadata to {self.index_path} and {self.metadata_path}")
             
         except Exception as e:
-            logging.error(f"Failed to save index/metadata: {e}")
+            print(f"Failed to save index/metadata: {e}")
             raise
     
     def retrieve_context(self, query, top_k=5, min_score_threshold=0.3):
@@ -513,14 +511,12 @@ class RetrievalAugmentor:
             if relevant_chunks:
                 self.stats['successful_retrievals'] += 1
                 avg_similarity = np.mean([c['similarity'] for c in top_candidates])
-                logging.info(f"Retrieved {len(relevant_chunks)} chunks for query: {query[:100]}, avg similarity: {avg_similarity:.3f}")
             
             return relevant_chunks
             
         except Exception as e:
             error_msg = f"Context retrieval failed: {e}"
             print(f"❌ {error_msg}")
-            logging.error(error_msg)
             return []
     
     def _enhanced_rerank_candidates(self, query, candidates):
@@ -668,7 +664,7 @@ class RetrievalAugmentor:
             return results[:max_results]
             
         except Exception as e:
-            logging.error(f"Chunk search failed: {e}")
+            print(f"Chunk search failed: {e}")
             return []
     
     def remove_source(self, source_name):
@@ -725,7 +721,6 @@ class RetrievalAugmentor:
         except Exception as e:
             error_msg = f"Failed to remove source {source_name}: {e}"
             print(f"❌ {error_msg}")
-            logging.error(error_msg)
             return False
 
 # Example usage and testing
