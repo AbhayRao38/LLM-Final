@@ -52,20 +52,20 @@ class RetrievalAugmentor:
         # Initialize semantic model
         try:
             self.model = SentenceTransformer(model_name)
-            print(f"✓ Loaded semantic model: {model_name}")
+            print(f"âœ“ Loaded semantic model: {model_name}")
         except Exception as e:
-            print(f"❌ Failed to load semantic model: {e}")
+            print(f"âŒ Failed to load semantic model: {e}")
             raise
         
         # Initialize stopwords
         try:
             self.stop_words = set(stopwords.words('english'))
-            print("✓ NLTK stopwords loaded successfully")
+            print("âœ“ NLTK stopwords loaded successfully")
         except Exception as e:
             self.stop_words = set()
-            print(f"⚠ Could not load stopwords - using empty set: {e}")
+            print(f"âš  Could not load stopwords - using empty set: {e}")
             print("   Ensure NLTK data (stopwords) is downloaded to a writable location like /tmp/nltk_data")
-        
+            
         # Ensure the directory for index and metadata exists
         os.makedirs(os.path.dirname(self.index_path), exist_ok=True)
         os.makedirs(os.path.dirname(self.metadata_path), exist_ok=True)
@@ -76,27 +76,27 @@ class RetrievalAugmentor:
                 self.index = faiss.read_index(self.index_path)
                 with open(self.metadata_path, "r", encoding="utf-8") as f:
                     self.metadata = json.load(f)
-                print(f"✓ Loaded existing index with {len(self.metadata)} chunks from {self.index_path}")
+                print(f"âœ“ Loaded existing index with {len(self.metadata)} chunks from {self.index_path}")
             except Exception as e:
-                print(f"⚠ Could not load existing index from {self.index_path}: {e}")
+                print(f"âš  Could not load existing index from {self.index_path}: {e}")
                 self._initialize_new_index()
         else:
             print(f"No existing index found at {self.index_path}. Initializing new index.")
             self._initialize_new_index()
-        
+            
         # Statistics
         self.stats = {
             'total_chunks': len(self.metadata),
             'total_queries': 0,
             'successful_retrievals': 0
         }
-    
+
     def _initialize_new_index(self):
         """Initialize new empty index and metadata."""
         self.index = None
         self.metadata = []
-        print("✓ Initialized new empty index")
-    
+        print("âœ“ Initialized new empty index")
+
     def build_or_update_index_from_pdf(self, pdf_path, source_name=None, force_rebuild=False):
         """
         Enhanced PDF indexing with intelligent chunking and comprehensive error handling.
@@ -110,13 +110,13 @@ class RetrievalAugmentor:
             raise FileNotFoundError(f"PDF not found: {pdf_path}")
         
         source_name = source_name or os.path.basename(pdf_path)
-        print(f"📚 Indexing PDF: {source_name}")
+        print(f"ðŸ“š Indexing PDF: {source_name}")
         
         # Check if already indexed
         if not force_rebuild:
             existing_chunks = [m for m in self.metadata if m.get('source') == source_name]
             if existing_chunks:
-                print(f"⚠ Source '{source_name}' already indexed ({len(existing_chunks)} chunks)")
+                print(f"âš  Source '{source_name}' already indexed ({len(existing_chunks)} chunks)")
                 print("   Use force_rebuild=True to reindex")
                 return
         
@@ -125,30 +125,30 @@ class RetrievalAugmentor:
             raw_text = self._extract_text_from_pdf(pdf_path)
             
             if not raw_text.strip():
-                print("❌ No text extracted from PDF")
+                print("âŒ No text extracted from PDF")
                 return
             
-            print(f"✓ Extracted {len(raw_text):,} characters")
+            print(f"âœ“ Extracted {len(raw_text):,} characters")
             
             # Clean and preprocess text
             cleaned_text = self._clean_and_preprocess_text(raw_text)
-            print(f"✓ Cleaned text: {len(cleaned_text):,} characters")
+            print(f"âœ“ Cleaned text: {len(cleaned_text):,} characters")
             
             # Create intelligent chunks
             chunks = self._create_intelligent_chunks(cleaned_text, source_name)
-            print(f"✓ Created {len(chunks)} intelligent chunks")
+            print(f"âœ“ Created {len(chunks)} intelligent chunks")
             
             if not chunks:
-                print("❌ No valid chunks created")
+                print("âŒ No valid chunks created")
                 return
             
             # Generate embeddings
-            print("🔄 Generating embeddings...")
+            print("ðŸ”„ Generating embeddings...")
             chunk_texts = [chunk['text'] for chunk in chunks]
             embeddings = self._generate_embeddings_batch(chunk_texts)
             
             if embeddings is None:
-                print("❌ Failed to generate embeddings")
+                print("âŒ Failed to generate embeddings")
                 return
             
             # Update index
@@ -157,16 +157,16 @@ class RetrievalAugmentor:
             # Save index and metadata
             self._save_index_and_metadata()
             
-            print(f"✅ Successfully indexed {len(chunks)} chunks from {source_name}")
+            print(f"âœ… Successfully indexed {len(chunks)} chunks from {source_name}")
             
             # Update statistics
             self.stats['total_chunks'] = len(self.metadata)
             
         except Exception as e:
             error_msg = f"Failed to index PDF {source_name}: {e}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             raise
-    
+
     def _extract_text_from_pdf(self, pdf_path):
         """
         Extract text from PDF with enhanced error handling.
@@ -186,9 +186,9 @@ class RetrievalAugmentor:
         except Exception as e:
             print(f"Could not open PDF {pdf_path}: {e}")
             raise
-        
+            
         return "\n".join(text_blocks)
-    
+
     def _clean_and_preprocess_text(self, text):
         """
         Comprehensive text cleaning and preprocessing.
@@ -229,7 +229,7 @@ class RetrievalAugmentor:
         text = re.sub(r'\s+', ' ', text)
         
         return text.strip()
-    
+
     def _create_intelligent_chunks(self, text, source_name):
         """
         Create intelligent chunks using sentence boundaries and semantic coherence.
@@ -268,7 +268,7 @@ class RetrievalAugmentor:
                         if chunk_metadata:
                             chunks.append(chunk_metadata)
                             chunk_id += 1
-                    
+                            
                     # Start new chunk with overlap
                     if self.chunk_overlap > 0:
                         overlap_text = self._get_overlap_text(current_chunk, self.chunk_overlap)
@@ -292,13 +292,13 @@ class RetrievalAugmentor:
                 )
                 if chunk_metadata:
                     chunks.append(chunk_metadata)
-            
+                    
         except Exception as e:
             print(f"Intelligent chunking failed: {e}, falling back to simple chunking")
             return self._create_simple_chunks(text, source_name)
-        
+            
         return chunks
-    
+
     def _create_simple_chunks(self, text, source_name):
         """
         Fallback simple chunking method.
@@ -318,9 +318,9 @@ class RetrievalAugmentor:
                 chunk_id += 1
             
             start = end - self.chunk_overlap if self.chunk_overlap > 0 else end
-        
+            
         return chunks
-    
+
     def _get_overlap_text(self, text, overlap_words):
         """
         Get the last N words from text for overlap.
@@ -329,7 +329,7 @@ class RetrievalAugmentor:
         if len(words) <= overlap_words:
             return text
         return " ".join(words[-overlap_words:])
-    
+
     def _create_chunk_metadata(self, text, source_name, chunk_id):
         """
         Create metadata for a text chunk with quality checks.
@@ -359,7 +359,7 @@ class RetrievalAugmentor:
             'created_at': datetime.utcnow().isoformat(),
             'quality_score': self._calculate_quality_score(text)
         }
-    
+
     def _calculate_quality_score(self, text):
         """
         Calculate a quality score for a text chunk.
@@ -372,7 +372,7 @@ class RetrievalAugmentor:
             score += 2
         elif 20 <= word_count < 50 or 300 < word_count <= 500:
             score += 1
-        
+            
         # Academic content indicators
         academic_terms = [
             'algorithm', 'method', 'approach', 'technique', 'process',
@@ -388,15 +388,15 @@ class RetrievalAugmentor:
         sentence_count = len([s for s in text.split('.') if s.strip()])
         if sentence_count >= 2:
             score += 1
-        
+            
         # Avoid repetitive content
         words = text.lower().split()
         unique_words = set(words)
         if len(unique_words) / len(words) > 0.7:  # Good word diversity
             score += 1
-        
+            
         return score
-    
+
     def _generate_embeddings_batch(self, texts, batch_size=32):
         """
         Generate embeddings for texts in batches with error handling.
@@ -412,7 +412,7 @@ class RetrievalAugmentor:
         except Exception as e:
             print(f"Failed to generate embeddings: {e}")
             return None
-    
+
     def _update_index_with_chunks(self, chunks, embeddings):
         """
         Update FAISS index with new chunks and embeddings.
@@ -421,17 +421,17 @@ class RetrievalAugmentor:
             # Create new index
             dimension = embeddings.shape[1]
             self.index = faiss.IndexFlatL2(dimension)
-            print(f"✓ Created new FAISS index (dimension: {dimension})")
-        
+            print(f"âœ“ Created new FAISS index (dimension: {dimension})")
+            
         # Add embeddings to index
         self.index.add(embeddings)
         
         # Add chunks to metadata
         self.metadata.extend(chunks)
         
-        print(f"✓ Added {len(chunks)} chunks to index")
-    
-    def _save_index_and_metadata(self):
+        print(f"âœ“ Added {len(chunks)} chunks to index")
+
+    def _save_index_and_metadata(self, ):
         """
         Save FAISS index and metadata to disk.
         """
@@ -443,12 +443,12 @@ class RetrievalAugmentor:
             with open(self.metadata_path, "w", encoding="utf-8") as f:
                 json.dump(self.metadata, f, indent=2, ensure_ascii=False)
             
-            print(f"✓ Saved index and metadata to {self.index_path} and {self.metadata_path}")
+            print(f"âœ“ Saved index and metadata to {self.index_path} and {self.metadata_path}")
             
         except Exception as e:
             print(f"Failed to save index/metadata: {e}")
             raise
-    
+
     def retrieve_context(self, query, top_k=5, min_score_threshold=0.3):
         """
         Enhanced context retrieval with semantic reranking and quality filtering.
@@ -459,13 +459,13 @@ class RetrievalAugmentor:
             min_score_threshold: Minimum similarity score threshold
         """
         if self.index is None or not self.metadata:
-            print("⚠ No index available for retrieval")
+            print("âš  No index available for retrieval")
             return []
         
         self.stats['total_queries'] += 1
         
         try:
-            print(f"🔍 Retrieving context for: {query[:50]}...")
+            print(f"ðŸ” Retrieving context for: {query[:50]}...")
             
             # Generate query embedding
             query_embedding = self.model.encode([query], convert_to_numpy=True)
@@ -493,7 +493,7 @@ class RetrievalAugmentor:
             candidates = [c for c in candidates if c['similarity'] >= min_score_threshold]
             
             if not candidates:
-                print(f"⚠ No chunks found above similarity threshold {min_score_threshold}")
+                print(f"âš  No chunks found above similarity threshold {min_score_threshold}")
                 return []
             
             # Enhanced reranking
@@ -505,20 +505,20 @@ class RetrievalAugmentor:
             # Extract chunk texts
             relevant_chunks = [c['chunk']['text'] for c in top_candidates]
             
-            print(f"✓ Retrieved {len(relevant_chunks)} relevant chunks")
+            print(f"âœ“ Retrieved {len(relevant_chunks)} relevant chunks")
             
             # Log retrieval details
             if relevant_chunks:
                 self.stats['successful_retrievals'] += 1
                 avg_similarity = np.mean([c['similarity'] for c in top_candidates])
-            
+                
             return relevant_chunks
             
         except Exception as e:
             error_msg = f"Context retrieval failed: {e}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             return []
-    
+
     def _enhanced_rerank_candidates(self, query, candidates):
         """
         Enhanced reranking using multiple signals.
@@ -561,10 +561,10 @@ class RetrievalAugmentor:
             # Calculate final score
             final_score = base_score + keyword_bonus + quality_bonus + length_penalty + academic_bonus
             candidate['final_score'] = final_score
-        
+            
         # Sort by final score
         return sorted(candidates, key=lambda x: x['final_score'], reverse=True)
-    
+
     def get_index_stats(self):
         """
         Get comprehensive statistics about the index.
@@ -602,14 +602,14 @@ class RetrievalAugmentor:
         }
         
         return stats
-    
+
     def print_index_stats(self):
         """
         Print comprehensive index statistics.
         """
         stats = self.get_index_stats()
         
-        print("📊 Retrieval Index Statistics:")
+        print("ðŸ“Š Retrieval Index Statistics:")
         print("-" * 40)
         print(f"Total chunks: {stats['total_chunks']}")
         print(f"Total sources: {stats['total_sources']}")
@@ -624,8 +624,8 @@ class RetrievalAugmentor:
             print(f"\nSources:")
             for source in stats['sources']:
                 source_chunks = [c for c in self.metadata if c.get('source') == source]
-                print(f"  • {source}: {len(source_chunks)} chunks")
-    
+                print(f"   â€¢ {source}: {len(source_chunks)} chunks")
+
     def search_chunks(self, query, max_results=10):
         """
         Search chunks and return detailed results with metadata.
@@ -666,7 +666,7 @@ class RetrievalAugmentor:
         except Exception as e:
             print(f"Chunk search failed: {e}")
             return []
-    
+            
     def remove_source(self, source_name):
         """
         Remove all chunks from a specific source.
@@ -682,7 +682,7 @@ class RetrievalAugmentor:
             print(f"No chunks found for source: {source_name}")
             return False
         
-        print(f"🗑️ Removing {len(chunks_to_remove)} chunks from source: {source_name}")
+        print(f"ðŸ—‘ï¸  Removing {len(chunks_to_remove)} chunks from source: {source_name}")
         
         try:
             # Remove chunks from metadata (in reverse order to maintain indices)
@@ -691,7 +691,7 @@ class RetrievalAugmentor:
             
             # Rebuild index (FAISS doesn't support efficient deletion)
             if self.metadata:
-                print("🔄 Rebuilding index...")
+                print("ðŸ”„ Rebuilding index...")
                 chunk_texts = [chunk['text'] for chunk in self.metadata]
                 embeddings = self._generate_embeddings_batch(chunk_texts)
                 
@@ -704,23 +704,23 @@ class RetrievalAugmentor:
                     # Save updated index and metadata
                     self._save_index_and_metadata()
                     
-                    print(f"✅ Successfully removed source: {source_name}")
+                    print(f"âœ… Successfully removed source: {source_name}")
                     self.stats['total_chunks'] = len(self.metadata)
                     return True
                 else:
-                    print("❌ Failed to rebuild index")
+                    print("âŒ Failed to rebuild index")
                     return False
             else:
                 # No chunks left, reset index
                 self._initialize_new_index()
                 self._save_index_and_metadata()
-                print(f"✅ Removed last source: {source_name}")
+                print(f"âœ… Removed last source: {source_name}")
                 self.stats['total_chunks'] = 0
                 return True
                 
         except Exception as e:
             error_msg = f"Failed to remove source {source_name}: {e}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             return False
 
 # Example usage and testing
@@ -736,6 +736,6 @@ if __name__ == "__main__":
     
     print("\nRetrieval Augmentor ready for use!")
     print("Example usage:")
-    print("  retrieval.build_or_update_index_from_pdf('textbook.pdf')")
-    print("  chunks = retrieval.retrieve_context('machine learning', top_k=3)")
-    print("  results = retrieval.search_chunks('algorithms', max_results=5)")
+    print("   retrieval.build_or_update_index_from_pdf('textbook.pdf')")
+    print("   chunks = retrieval.retrieve_context('machine learning', top_k=3)")
+    print("   results = retrieval.search_chunks('algorithms', max_results=5)")

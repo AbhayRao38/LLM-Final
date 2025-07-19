@@ -19,6 +19,9 @@ from knowledgebase import KnowledgeBaseManager
 # Import functions from app.py
 from app import process_api_query, initialize_api_components
 
+# Import the new caching system
+from response_cache import DualResponseCache
+
 # Initialize FastAPI app
 app = FastAPI(
     title="QuillAI Enhanced Academic Assistant API",
@@ -42,19 +45,19 @@ class QueryRequest(BaseModel):
     prompt: str  # Frontend sends "prompt" instead of "query"
     mode: int    # Frontend sends 0 (learning) or 1 (question)
     marks: int   # Frontend sends 0, 2, 5, or 10
-    
+
     @validator('mode')
     def validate_mode(cls, v):
         if v not in [0, 1]:
             raise ValueError('Mode must be 0 (learning) or 1 (question)')
         return v
-    
+
     @validator('marks')
     def validate_marks(cls, v):
         if v not in [0, 2, 5, 10]:
             raise ValueError('Marks must be 0, 2, 5, or 10')
         return v
-    
+
     def to_internal_format(self):
         """Convert frontend format to internal format"""
         return {
@@ -75,25 +78,29 @@ class SystemStatsResponse(BaseModel):
     retrieval_index: dict
     timestamp: str
 
-# Global instances for LLM and Retrieval System, initialized once at startup
+# Global instances for LLM, Retrieval System, and Cache
 llm_instance: Optional[QuillAILLM] = None
 retrieval_instance: Optional[RetrievalAugmentor] = None
+cache_instance: Optional[DualResponseCache] = None # NEW: Cache instance
 
 @app.on_event("startup")
 async def startup_event():
     """Initialize components on server startup."""
-    global llm_instance, retrieval_instance # Declare global to modify them
+    global llm_instance, retrieval_instance, cache_instance # Declare global to modify them
     try:
         print("🚀 Starting QuillAI API Server...")
         print("🤖 Initializing AI components (this may take a moment)...")
-        
+
         # Initialize components once and store them globally
         llm_instance, retrieval_instance = initialize_api_components()
-        
+
+        # NEW: Initialize cache
+        cache_instance = DualResponseCache()
+
         print("✅ QuillAI API Server ready!")
         print("📖 API Documentation: http://localhost:8000/docs")
         print("🔍 ReDoc Documentation: http://localhost:8000/redoc")
-        
+
     except Exception as e:
         print(f"❌ Startup failed: {e}")
         # Re-raise the exception to prevent the server from starting in a broken state
@@ -104,35 +111,44 @@ async def startup_event():
 async def process_query(request: QueryRequest):
     """
     Process academic queries and return dual outputs (LLM + Custom).
-    
+
     This is the main endpoint your Flutter app will call.
     """
     # Ensure components are initialized before processing requests
-    if llm_instance is None or retrieval_instance is None:
+    if llm_instance is None or retrieval_instance is None or cache_instance is None:
         raise HTTPException(status_code=503, detail="AI components not initialized. Server is still starting up or failed to initialize.")
 
+    from types import SimpleNamespace
+    internal_query_obj = SimpleNamespace(**request.to_internal_format())
+    query_text = internal_query_obj.query
+    mode_str = internal_query_obj.mode
+    marks_val = internal_query_obj.marks
+
+    # NEW: Check cache first
+    cached_response = cache_instance.get(query_text, mode_str, marks_val)
+    if cached_response:
+        print(f"Cache hit for query: {query_text[:50]}...")
+        return cached_response
+
     try:
-        print(f"📝 Processing query: {request.prompt[:50]}...")
-        
+        print(f"📝 Processing query: {query_text[:50]}...")
+
         # Validate request
-        if not request.prompt or not request.prompt.strip():
+        if not query_text or not query_text.strip():
             raise HTTPException(status_code=400, detail="Query cannot be empty")
-        
-        # Convert frontend format to internal format
-        from types import SimpleNamespace
-        internal_query_obj = SimpleNamespace(**request.to_internal_format())
-        
+
         # Process the query, passing the initialized instances
+        # process_api_query now returns the full dual response dict
         result = process_api_query(internal_query_obj, llm_instance, retrieval_instance)
-        
+
         if not result["success"]:
             raise HTTPException(status_code=500, detail=result["error_message"])
-        
+
         # Remap output keys to match frontend expectations
         frontend_response = {
             "success": result["success"],
-            "dialo gpt output": result.get("llm_output", ""),
-            "custom llm": result.get("custom_output", ""),
+            "dialogpt_output": result.get("llm_output", ""), # Renamed for consistency
+            "custom_llm": result.get("custom_output", ""),
             "intent": result.get("intent", ""),
             "domain": result.get("domain", ""),
             "topics": result.get("topics", []),
@@ -141,12 +157,15 @@ async def process_query(request: QueryRequest):
             "word_count": result.get("word_count", 0),
             "timestamp": result.get("timestamp", "")
         }
-        
+
+        # NEW: Cache the successful response
+        cache_instance.set(query_text, mode_str, marks_val, frontend_response)
+
         # Log successful request
-        print(f"Successful query: {request.prompt[:100]}, Intent: {result.get('intent', 'unknown')}, Domain: {result.get('domain', 'unknown')}")
-        
+        print(f"Successful query: {query_text[:100]}, Intent: {result.get('intent', 'unknown')}, Domain: {result.get('domain', 'unknown')}")
+
         return frontend_response
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -160,8 +179,7 @@ async def upload_pdf(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     use_ocr: bool = False,
-    language: str = "eng"
-):
+    language: str = "eng"):
     """
     Upload and process PDF files for the knowledge base.
     """
@@ -172,15 +190,15 @@ async def upload_pdf(
                 success=False,
                 error_message="File must be a PDF"
             )
-        
+
         # Save uploaded file to /tmp
         upload_dir = "/tmp/uploaded_pdfs" # Changed to /tmp
         os.makedirs(upload_dir, exist_ok=True)
-        
+
         file_path = os.path.join(upload_dir, file.filename)
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
-        
+
         # Process PDF in background
         background_tasks.add_task(
             process_uploaded_pdf,
@@ -189,13 +207,13 @@ async def upload_pdf(
             use_ocr,
             language
         )
-        
+
         return PDFUploadResponse(
             success=True,
             message=f"PDF '{file.filename}' uploaded successfully and is being processed",
             filename=file.filename
         )
-        
+
     except Exception as e:
         return PDFUploadResponse(
             success=False,
@@ -207,10 +225,10 @@ def process_uploaded_pdf(file_path: str, filename: str, use_ocr: bool, language:
     try:
         # Initialize knowledge base with /tmp storage
         kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
-        
+
         # Add PDF to knowledge base
         kb_manager.add_pdf(file_path, force_ocr=use_ocr, language=language)
-        
+
         # Build search index with /tmp paths (defaults in retrieval.py)
         retrieval_system = RetrievalAugmentor(chunk_size=400, chunk_overlap=50)
         retrieval_system.build_or_update_index_from_pdf(
@@ -218,12 +236,12 @@ def process_uploaded_pdf(file_path: str, filename: str, use_ocr: bool, language:
             source_name=filename,
             force_rebuild=True
         )
-        
+
         # Clean up uploaded file
         os.remove(file_path)
-        
+
         print(f"Successfully processed uploaded PDF: {filename}")
-        
+
     except Exception as e:
         print(f"Failed to process uploaded PDF {filename}: {e}")
 
@@ -237,17 +255,17 @@ async def get_system_stats():
         # Knowledge base stats with /tmp storage
         kb_manager = KnowledgeBaseManager(storage_dir="/tmp/textbooks") # Changed to /tmp
         kb_stats = kb_manager.get_storage_stats()
-        
+
         # Retrieval index stats (defaults in retrieval.py)
         retrieval_system = RetrievalAugmentor(chunk_size=400, chunk_overlap=50)
         index_stats = retrieval_system.get_index_stats()
-        
+
         return SystemStatsResponse(
             knowledge_base=kb_stats,
             retrieval_index=index_stats,
             timestamp=datetime.utcnow().isoformat() + "Z"
         )
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to get stats: {str(e)}")
 
@@ -274,13 +292,13 @@ async def search_knowledge_base(query: str, max_results: int = 5):
         # Retrieval system (defaults in retrieval.py)
         retrieval_system = RetrievalAugmentor(chunk_size=400, chunk_overlap=50)
         results = retrieval_system.search_chunks(query, max_results=max_results)
-        
+
         return {
             "query": query,
             "results": results,
             "count": len(results)
         }
-        
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
 

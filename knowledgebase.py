@@ -22,7 +22,7 @@ class KnowledgeBaseManager:
         # Create storage directory
         if not os.path.exists(self.storage_dir):
             os.makedirs(self.storage_dir)
-        
+            
         # Initialize metadata
         self.metadata = self._load_metadata()
         
@@ -33,16 +33,16 @@ class KnowledgeBaseManager:
         """Check if OCR (Tesseract) is available."""
         try:
             pytesseract.get_tesseract_version()
-            print("✓ OCR (Tesseract) available for scanned PDF processing")
+            print("âœ“ OCR (Tesseract) available for scanned PDF processing")
             return True
         except Exception as e:
-            print(f"⚠ OCR not available: {e}")
-            print("  Install Tesseract for scanned PDF support:")
-            print("  - Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki")
-            print("  - macOS: brew install tesseract")
-            print("  - Linux: sudo apt-get install tesseract-ocr")
+            print(f"âš  OCR not available: {e}")
+            print("   Install Tesseract for scanned PDF support:")
+            print("   - Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki")
+            print("   - macOS: brew install tesseract")
+            print("   - Linux: sudo apt-get install tesseract-ocr")
             return False
-    
+
     def _load_metadata(self):
         """Load metadata from file."""
         if os.path.exists(self.metadata_file):
@@ -53,16 +53,16 @@ class KnowledgeBaseManager:
                 print(f"Warning: Could not load metadata from {self.metadata_file}: {e}")
                 return {}
         return {}
-    
+
     def _save_metadata(self):
         """Save metadata to file."""
         try:
             with open(self.metadata_file, 'w', encoding='utf-8') as f:
                 json.dump(self.metadata, f, indent=2, ensure_ascii=False)
-            print(f"✓ Saved metadata to {self.metadata_file}")
+            print(f"âœ“ Saved metadata to {self.metadata_file}")
         except Exception as e:
             print(f"Warning: Could not save metadata to {self.metadata_file}: {e}")
-    
+
     def _calculate_file_hash(self, file_path):
         """Calculate SHA-256 hash of file for duplicate detection."""
         hash_sha256 = hashlib.sha256()
@@ -74,7 +74,7 @@ class KnowledgeBaseManager:
         except Exception as e:
             print(f"Could not calculate hash for {file_path}: {e}")
             return None
-    
+
     def _validate_pdf(self, pdf_path):
         """
         Comprehensive PDF validation with detailed diagnostics.
@@ -106,7 +106,7 @@ class KnowledgeBaseManager:
             
             if file_size > 100 * 1024 * 1024:  # 100MB limit
                 validation_result['warnings'].append(f"Large file ({file_size / (1024*1024):.1f}MB) may cause performance issues")
-            
+                
             # Open and validate PDF structure
             with fitz.open(pdf_path) as doc:
                 validation_result['page_count'] = len(doc)
@@ -131,7 +131,7 @@ class KnowledgeBaseManager:
                     if text.strip():
                         text_pages += 1
                         total_text_length += len(text)
-                    
+                        
                     # Check for images
                     image_list = page.get_images()
                     if image_list:
@@ -143,7 +143,7 @@ class KnowledgeBaseManager:
                 # Determine if PDF is primarily scanned
                 if image_pages > text_pages and total_text_length < 100:
                     validation_result['warnings'].append("PDF appears to be scanned - OCR may be needed")
-                
+                    
                 # Basic language detection
                 if total_text_length > 100:
                     sample_text = ""
@@ -151,15 +151,15 @@ class KnowledgeBaseManager:
                         sample_text += doc[page_num].get_text()[:500]
                     
                     validation_result['language'] = self._detect_language(sample_text)
-                
+                    
                 validation_result['valid'] = True
                 
         except Exception as e:
             validation_result['errors'].append(f"PDF validation failed: {str(e)}")
             print(f"PDF validation error for {pdf_path}: {e}")
-        
+            
         return validation_result
-    
+
     def _detect_language(self, text):
         """
         Simple language detection based on character patterns.
@@ -177,7 +177,7 @@ class KnowledgeBaseManager:
             return 'spa'
         else:
             return 'eng'  # Default to English
-    
+
     def add_pdf(self, pdf_path, force_ocr=False, language='eng'):
         """
         Enhanced PDF addition with validation, OCR support, and comprehensive error handling.
@@ -187,16 +187,16 @@ class KnowledgeBaseManager:
             force_ocr: Force OCR even if text is extractable
             language: Language for OCR (default: 'eng')
         """
-        print(f"📄 Processing PDF: {os.path.basename(pdf_path)}")
+        print(f"ðŸ“„ Processing PDF: {os.path.basename(pdf_path)}")
         
         # Validate PDF
         validation = self._validate_pdf(pdf_path)
         
         if not validation['valid']:
             error_msg = f"PDF validation failed: {'; '.join(validation['errors'])}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             raise ValueError(error_msg)
-        
+            
         # Display validation results
         print(f"   File size: {validation['file_size'] / (1024*1024):.1f}MB")
         print(f"   Pages: {validation['page_count']}")
@@ -205,26 +205,26 @@ class KnowledgeBaseManager:
         
         if validation['warnings']:
             for warning in validation['warnings']:
-                print(f"   ⚠ {warning}")
-        
+                print(f"   âš  {warning}")
+                
         # Check for duplicates
         file_hash = self._calculate_file_hash(pdf_path)
         if file_hash and file_hash in [meta.get('hash') for meta in self.metadata.values()]:
-            print("⚠ Duplicate file detected - skipping")
+            print("âš  Duplicate file detected - skipping")
             return
-        
+            
         # Copy PDF to storage
         filename = os.path.basename(pdf_path)
         dest_path = os.path.join(self.storage_dir, filename)
         
         try:
             shutil.copy(pdf_path, dest_path)
-            print(f"✓ PDF copied to knowledge base: {filename}")
+            print(f"âœ“ PDF copied to knowledge base: {filename}")
         except Exception as e:
             error_msg = f"Failed to copy PDF to {dest_path}: {e}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             raise
-        
+            
         # Store metadata
         self.metadata[filename] = {
             'original_path': pdf_path,
@@ -240,19 +240,19 @@ class KnowledgeBaseManager:
         
         self._save_metadata()
         
-        print(f"✓ PDF successfully added to knowledge base")
+        print(f"âœ“ PDF successfully added to knowledge base")
         
         # Provide extraction recommendations
         if not validation['has_text'] or force_ocr:
             if self.ocr_available:
-                print("💡 Recommendation: Run OCR extraction for better text retrieval")
+                print("ðŸ’¡ Recommendation: Run OCR extraction for better text retrieval")
                 print(f"   Command: extract_text('{filename}', use_ocr=True)")
             else:
-                print("⚠ PDF appears to be scanned but OCR is not available")
+                print("âš  PDF appears to be scanned but OCR is not available")
                 print("   Install Tesseract for scanned PDF support")
         else:
-            print("💡 PDF has extractable text - ready for indexing")
-    
+            print("ðŸ’¡ PDF has extractable text - ready for indexing")
+
     def extract_text(self, pdf_filename, use_ocr=False, language='eng', clean_text=True):
         """
         Enhanced text extraction with OCR fallback and comprehensive cleaning.
@@ -268,12 +268,12 @@ class KnowledgeBaseManager:
         if not os.path.isfile(pdf_path):
             raise FileNotFoundError(f"PDF not found in knowledge base: {pdf_filename}")
         
-        print(f"📖 Extracting text from: {pdf_filename}")
+        print(f"ðŸ“– Extracting text from: {pdf_filename}")
         
         if use_ocr and not self.ocr_available:
-            print("⚠ OCR requested but not available - falling back to standard extraction")
+            print("âš  OCR requested but not available - falling back to standard extraction")
             use_ocr = False
-        
+            
         text_blocks = []
         extraction_stats = {
             'pages_processed': 0,
@@ -299,7 +299,7 @@ class KnowledgeBaseManager:
                         page_text = page.get_text()
                         if page_text.strip():
                             extraction_stats['pages_with_text'] += 1
-                        
+                            
                         # Fallback to OCR if no text found and OCR is available
                         elif self.ocr_available and not page_text.strip():
                             print(f"   Page {page_num + 1}: No text found, trying OCR...")
@@ -308,33 +308,33 @@ class KnowledgeBaseManager:
                                 page_text = ocr_text
                                 extraction_stats['pages_with_ocr'] += 1
                                 extraction_stats['extraction_method'] = 'hybrid'
-                    
+                                
                     if page_text.strip():
                         if clean_text:
                             page_text = self._clean_extracted_text(page_text)
-                        
+                            
                         text_blocks.append(page_text)
                         extraction_stats['total_characters'] += len(page_text)
-                    
+                        
                     # Progress indicator for large documents
                     if extraction_stats['pages_processed'] % 10 == 0:
                         print(f"   Processed {extraction_stats['pages_processed']} pages...")
-        
+                        
         except Exception as e:
             error_msg = f"Text extraction failed for {pdf_filename}: {e}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             print(f"Text extraction error for {pdf_filename}: {e}")
             raise
-        
+            
         # Update metadata
         if pdf_filename in self.metadata:
             self.metadata[pdf_filename]['extraction_method'] = extraction_stats['extraction_method']
             self.metadata[pdf_filename]['extraction_stats'] = extraction_stats
             self.metadata[pdf_filename]['last_extracted'] = datetime.utcnow().isoformat()
             self._save_metadata()
-        
+            
         # Display extraction results
-        print(f"✓ Text extraction completed:")
+        print(f"âœ“ Text extraction completed:")
         print(f"   Pages processed: {extraction_stats['pages_processed']}")
         print(f"   Pages with text: {extraction_stats['pages_with_text']}")
         if extraction_stats['pages_with_ocr'] > 0:
@@ -343,14 +343,14 @@ class KnowledgeBaseManager:
         print(f"   Extraction method: {extraction_stats['extraction_method']}")
         
         if not text_blocks:
-            print("⚠ No text extracted from PDF")
+            print("âš  No text extracted from PDF")
             if not use_ocr and self.ocr_available:
-                print("💡 Try using OCR: extract_text(filename, use_ocr=True)")
-        
+                print("ðŸ’¡ Try using OCR: extract_text(filename, use_ocr=True)")
+                
         combined_text = "\n".join(text_blocks)
         
         return combined_text
-    
+
     def _extract_text_with_ocr(self, page, language='eng'):
         """
         Extract text from a PDF page using OCR.
@@ -373,7 +373,7 @@ class KnowledgeBaseManager:
         except Exception as e:
             print(f"OCR extraction failed: {e}")
             return ""
-    
+
     def _clean_extracted_text(self, text):
         """
         Comprehensive text cleaning for better retrieval quality.
@@ -418,7 +418,7 @@ class KnowledgeBaseManager:
         text = text.strip()
         
         return text
-    
+
     def get_pdf_info(self, pdf_filename):
         """
         Get comprehensive information about a PDF in the knowledge base.
@@ -434,9 +434,9 @@ class KnowledgeBaseManager:
         
         if info['current_file_exists']:
             info['current_file_size'] = os.path.getsize(pdf_path)
-        
+            
         return info
-    
+
     def list_pdfs(self):
         """
         List all PDFs in the knowledge base with their metadata.
@@ -445,11 +445,11 @@ class KnowledgeBaseManager:
             print("No PDFs in knowledge base")
             return []
         
-        print(f"📚 Knowledge Base Contents ({len(self.metadata)} files):")
+        print(f"ðŸ“š Knowledge Base Contents ({len(self.metadata)} files):")
         print("-" * 80)
         
         for filename, meta in self.metadata.items():
-            print(f"📄 {filename}")
+            print(f"ðŸ“„ {filename}")
             print(f"   Added: {meta.get('added_date', 'Unknown')}")
             print(f"   Size: {meta.get('file_size', 0) / (1024*1024):.1f}MB")
             print(f"   Pages: {meta.get('page_count', 'Unknown')}")
@@ -460,11 +460,11 @@ class KnowledgeBaseManager:
             if 'extraction_stats' in meta:
                 stats = meta['extraction_stats']
                 print(f"   Characters extracted: {stats.get('total_characters', 0):,}")
-            
+                
             print()
-        
+            
         return list(self.metadata.keys())
-    
+
     def remove_pdf(self, pdf_filename):
         """
         Remove a PDF from the knowledge base.
@@ -479,19 +479,19 @@ class KnowledgeBaseManager:
             # Remove file if it exists
             if os.path.exists(pdf_path):
                 os.remove(pdf_path)
-            
+                
             # Remove from metadata
             del self.metadata[pdf_filename]
             self._save_metadata()
             
-            print(f"✓ Removed PDF from knowledge base: {pdf_filename}")
+            print(f"âœ“ Removed PDF from knowledge base: {pdf_filename}")
             return True
             
         except Exception as e:
             error_msg = f"Failed to remove PDF: {e}"
-            print(f"❌ {error_msg}")
+            print(f"âŒ {error_msg}")
             return False
-    
+
     def get_storage_stats(self):
         """
         Get storage statistics for the knowledge base.
@@ -507,7 +507,7 @@ class KnowledgeBaseManager:
         for meta in self.metadata.values():
             method = meta.get('extraction_method', 'not_extracted')
             extraction_methods[method] = extraction_methods.get(method, 0) + 1
-        
+            
         return {
             'total_files': total_files,
             'total_size_mb': total_size / (1024 * 1024),
@@ -517,14 +517,14 @@ class KnowledgeBaseManager:
             'extraction_methods': extraction_methods,
             'ocr_available': self.ocr_available
         }
-    
+
     def print_storage_stats(self):
         """
         Print comprehensive storage statistics.
         """
         stats = self.get_storage_stats()
         
-        print("📊 Knowledge Base Statistics:")
+        print("ðŸ“Š Knowledge Base Statistics:")
         print("-" * 40)
         print(f"Total files: {stats['total_files']}")
         print(f"Total size: {stats['total_size_mb']:.1f} MB")
@@ -536,7 +536,7 @@ class KnowledgeBaseManager:
         if stats['extraction_methods']:
             print("\nExtraction methods:")
             for method, count in stats['extraction_methods'].items():
-                print(f"  {method}: {count} files")
+                print(f"   {method}: {count} files")
 
 # Example usage and testing
 if __name__ == "__main__":
@@ -554,6 +554,6 @@ if __name__ == "__main__":
     
     print("\nKnowledge Base Manager ready for use!")
     print("Example usage:")
-    print("  kb.add_pdf('path/to/textbook.pdf')")
-    print("  text = kb.extract_text('textbook.pdf', use_ocr=True)")
-    print("  kb.list_pdfs()")
+    print("   kb.add_pdf('path/to/textbook.pdf')")
+    print("   text = kb.extract_text('textbook.pdf', use_ocr=True)")
+    print("   kb.list_pdfs()")

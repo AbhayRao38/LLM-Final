@@ -6,6 +6,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import json
 from collections import Counter
+import concurrent.futures # For parallel generation
 
 class QuillAILLM:
     def __init__(self, model_name="microsoft/DialoGPT-medium", force_model_check=True, debug_mode=False):
@@ -24,9 +25,9 @@ class QuillAILLM:
         # NEW: Initialize semantic understanding for query analysis
         try:
             self.semantic_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-            print("✓ Semantic understanding model loaded")
+            print("âœ“ Semantic understanding model loaded")
         except Exception as e:
-            print(f"⚠ Warning: Could not load semantic model: {e}")
+            print(f"âš  Warning: Could not load semantic model: {e}")
             self.semantic_model = None
         
         # NEW: Intent detection patterns
@@ -58,7 +59,7 @@ class QuillAILLM:
             ],
             'explanation': [
                 r'explain', r'how.*does', r'how.*to', r'describe',
-                r'process.*of', r'steps?.*to', r'procedure'
+                r'process.*of', r'steps?.*to', 'procedure'
             ],
             'application': [
                 r'examples?.*of', r'applications?.*of', r'uses?.*of',
@@ -240,7 +241,6 @@ class QuillAILLM:
                     if topic in query_lower:
                         domain_score += 1
                         detected_topics.append(topic)
-            
             if domain_score > 0:
                 domain_scores[domain] = domain_score
         
@@ -481,12 +481,12 @@ class QuillAILLM:
                     # Find all occurrences and remove extras
                     phrase_pattern = re.escape(phrase)
                     matches = list(re.finditer(phrase_pattern, text))
-                    
+                                        
                     if len(matches) > 1:
                         # Remove all but the first occurrence
                         for match in reversed(matches[1:]):
                             text = text[:match.start()] + text[match.end():]
-                        
+                                                
                         if self.debug_mode:
                             print(f"Removed repeated phrase: {phrase}")
         
@@ -506,7 +506,7 @@ class QuillAILLM:
         return_citations=True,
         feedback_callback=None,
         temperature=0.8,
-        max_new_tokens=None
+        max_new_tokens=None # This will be dynamically set for LLM output
     ):
         """
         Enhanced generate_answer with intent detection, outline-expansion, and deduplication.
@@ -538,26 +538,23 @@ class QuillAILLM:
         target_words = None
         if mode.lower() == "question" and marks is not None:
             target_words = {2: 100, 5: 250, 10: 500}.get(marks, 100)
-
+        
+        # Max new tokens for DialoGPT (capped for load balancing)
         if max_new_tokens is None:
             if mode.lower() == "learning":
-                max_new_tokens = 400
-            else:
-                if target_words:
-                    max_new_tokens = min(max(target_words + 50, 150), 600)
-                else:
-                    max_new_tokens = 200
-
+                max_new_tokens = 200 # Max for LLM in learning mode
+            else: # question mode
+                max_new_tokens = 200 # Max for LLM in question mode, custom will handle full length
+        
         max_model_tokens = 1024
         max_input_tokens = max_model_tokens - max_new_tokens - 30
-
         if max_input_tokens < 100:
             max_new_tokens = 200
             max_input_tokens = max_model_tokens - max_new_tokens - 30
-
+        
         logs.append(f"Mode: {mode}, Marks: {marks}, Target words: {target_words}")
-        logs.append(f"Temperature: {temperature}, Max new tokens: {max_new_tokens}")
-
+        logs.append(f"Temperature: {temperature}, Max new tokens (LLM): {max_new_tokens}")
+        
         # Enhanced context handling with domain awareness
         selected_context = []
         if context_chunks and len(context_chunks) > 0:
@@ -571,38 +568,32 @@ class QuillAILLM:
                         chunk = chunk[:300] + "..."
                     relevant_chunks.append(chunk)
             
-            selected_context = relevant_chunks[:1]
+            selected_context = relevant_chunks[:1] # Use only the top 1 relevant chunk for prompt
             
             if selected_context:
                 logs.append(f"Using {len(selected_context)} relevant context chunk(s)")
             else:
                 logs.append("No relevant context found, proceeding without context")
 
-        # NEW: Use outline-expansion for long answers
-        if target_words and target_words >= 400:
-            logs.append("Using outline-expansion method for long answer")
-            answer = self.generate_outline_then_expand(query, mode, marks, target_words)
-        else:
-            # Create enhanced prompt with domain and intent awareness
-            prompt = self._create_domain_aware_prompt(query, mode, marks, target_words, selected_context, intent, domain, topics)
-            
-            # Continue with LLM generation
-            answer = self._generate_with_llm(prompt, max_input_tokens, max_new_tokens, temperature, query, mode, marks, target_words, selected_context, return_citations, logs)
+        # NEW: Use outline-expansion for long answers (this is for custom generation, not direct LLM)
+        # The direct LLM generation will always use _generate_with_llm
+        
+        # Create enhanced prompt with domain and intent awareness
+        prompt = self._create_domain_aware_prompt(query, mode, marks, target_words, selected_context, intent, domain, topics)
+        
+        # Continue with LLM generation
+        answer = self._generate_with_llm(prompt, max_input_tokens, max_new_tokens, temperature, query, mode, marks, target_words, selected_context, return_citations, logs)
         
         # NEW: Apply deduplication
         answer = self.deduplicate_response(answer)
         logs.append("Applied deduplication to remove repeated content")
         
-        # Enhanced structure and expansion
+        # Enhanced structure and expansion (this is for the LLM output, not custom)
         answer = self._enhance_and_expand_response(answer, query, mode, target_words)
         
-        # Ensure target word count for question mode
-        if mode.lower() == "question" and target_words:
-            current_words = len(answer.split())
-            if current_words < target_words * 0.7:
-                answer = self._expand_to_target_words(answer, query, target_words, mode)
-                logs.append(f"Expanded response to meet target word count")
-
+        # Ensure target word count for question mode (for LLM output, it's capped at 200)
+        # The precise word count for question mode will be handled by the custom generator
+        
         # Add citations if requested and we used relevant context
         if return_citations and selected_context:
             citations = []
@@ -613,17 +604,14 @@ class QuillAILLM:
             
             if citations:
                 answer += "\n\nReferences:\n" + "\n".join(citations)
-
+        
         # Final quality check and cleanup
         answer = self._final_quality_check(answer, query, mode, target_words)
-        logs.append(f"Final answer length: {len(answer)} chars, words: {len(answer.split())}")
-        logs.append(f"Total processing time: {(datetime.utcnow() - start_time).total_seconds():.2f} seconds")
-
+        logs.append(f"Final LLM answer length: {len(answer)} chars, words: {len(answer.split())}")
+        logs.append(f"Total processing time for LLM: {(datetime.utcnow() - start_time).total_seconds():.2f} seconds")
         self._write_logs(logs)
-
         if feedback_callback is not None:
             feedback_callback(query, answer, context_chunks)
-
         return answer
 
     # NEW: Specialized Intent Handlers
@@ -936,7 +924,6 @@ class QuillAILLM:
                     "Provide a concise academic answer with definition, key points, and examples. "
                     "Write 100-150 words in formal academic tone."
                 )
-        
         return instruction
 
     # Helper methods for new functionality
@@ -1010,7 +997,6 @@ class QuillAILLM:
                 type_templates = templates[question_type]
                 template_idx = len(questions) % len(type_templates)
                 questions.append(type_templates[template_idx])
-        
         return questions[:num_questions]
 
     def _generate_topic_list(self, topic, num_items, query):
@@ -1042,7 +1028,6 @@ class QuillAILLM:
                     key_points.append(sentence)
                 elif sentence.count(',') >= 2:  # Complex sentences often contain key info
                     key_points.append(sentence)
-        
         return key_points[:10]  # Limit to top 10
 
     def _generate_with_llm(self, prompt, max_input_tokens, max_new_tokens, temperature, query, mode, marks, target_words, selected_context, return_citations, logs):
@@ -1062,37 +1047,33 @@ class QuillAILLM:
                 excess = len(prompt_ids) - max_input_tokens
                 prompt_ids = prompt_ids[excess:]
                 logs.append(f"Truncated {excess} tokens from prompt")
-
         logs.append(f"Final input token length: {len(prompt_ids)} / {max_input_tokens}")
-
+        
         # Prepare tensors
         input_ids = torch.tensor([prompt_ids], dtype=torch.long, device=self.device)
         attention_mask = torch.ones_like(input_ids)
-
         try:
-            # Generate response
+            # Generate response with CPU-optimized parameters
             with torch.no_grad():
                 output = self.model.generate(
                     input_ids=input_ids,
                     attention_mask=attention_mask,
-                    max_new_tokens=max_new_tokens,
+                    max_new_tokens=max_new_tokens, # Dynamic based on marks, capped at 200 for LLM
                     min_new_tokens=30,
-                    temperature=temperature,
-                    top_p=0.92,
-                    top_k=50,
-                    do_sample=True,
+                    temperature=0.7,         # Lower temperature
+                    top_p=0.9,               # Focused sampling
+                    top_k=20,                # Smaller top_k
+                    do_sample=False,         # Greedy decoding (fastest)
                     eos_token_id=self.tokenizer.eos_token_id,
                     pad_token_id=self.tokenizer.pad_token_id,
-                    repetition_penalty=1.05,
-                    no_repeat_ngram_size=3
+                    repetition_penalty=1.0,  # Disabled penalties
+                    use_cache=True           # Enable caching
                 )
-
             # Decode and clean response
             result = self.tokenizer.decode(output[0], skip_special_tokens=True)
             answer = self._extract_and_clean_response(result, prompt, prompt_ids)
             
             return answer
-
         except Exception as e:
             logs.append(f"Exception occurred: {repr(e)}")
             
@@ -1101,7 +1082,6 @@ class QuillAILLM:
 
     # Keep all existing methods from your original file...
     # (I'm preserving your existing implementation for the methods below)
-
     def _create_enhanced_prompt(self, query, mode, marks, target_words, context_chunks):
         """Create an enhanced prompt that encourages proper response length and structure."""
         
@@ -1154,13 +1134,13 @@ class QuillAILLM:
                 answer = result.split("Academic Response:", 1)[-1].strip()
             else:
                 answer = result.strip()
-
+        
         # Clean up DialoGPT output issues
         answer = re.sub(r'<\|endoftext\|>.*$', '', answer, flags=re.DOTALL).strip()
         answer = re.sub(r'<pad>.*$', '', answer, flags=re.DOTALL).strip()
         answer = re.sub(r'<unk>.*$', '', answer, flags=re.DOTALL).strip()
         answer = re.sub(r'\n\s*\n\s*\n+', '\n\n', answer)  # Clean up excessive newlines
-
+        
         # Remove repetitive patterns but be less aggressive
         lines = answer.split('\n')
         cleaned_lines = []
@@ -1170,7 +1150,6 @@ class QuillAILLM:
             if line and (line != prev_line or len(line) < 30):  # Allow some repetition for structure
                 cleaned_lines.append(line)
                 prev_line = line
-
         return '\n'.join(cleaned_lines)
 
     def _generate_expanded_response(self, query, mode, marks, target_words, context_chunks):
@@ -1418,7 +1397,6 @@ class QuillAILLM:
         if mode.lower() == "learning":
             newline = "\n"
             response = f"""**Academic Explanation: {topic}**
-
 **Definition:**
 {topic} is a specialized area of study that encompasses specific principles, methodologies, and applications within its domain. Understanding this concept requires systematic examination of its fundamental components and practical implementations.
 
@@ -1439,93 +1417,95 @@ Mastery of {topic.lower()} requires both theoretical understanding and practical
                 response = f"{topic} is a specialized area of study with established principles and methodologies. Key characteristics include systematic approaches and evidence-based practices. Applications are found across academic and industry contexts, making it valuable for professional development."
             elif target_words <= 250:
                 newline = "\n"
-                response = f"""**Definition:** {topic} is a specialized area of study that encompasses specific principles, methodologies, and applications within its domain.{newline}{newline}**Key Characteristics:** The field is characterized by established theoretical frameworks, empirical methodologies, and practical applications across various contexts.{newline}{newline}**Examples:** Applications include academic research, industry practices, and technological implementations, demonstrating its broad relevance and practical value in professional settings."""
+                response = f"""**Definition:** {topic} is a specialized area of study that encompasses specific principles, methodologies, and applications within its domain.
+                
+**Key Characteristics:** The field is characterized by established theoretical frameworks, empirical methodologies, and practical applications across various contexts.
+                
+**Examples:** Applications include academic research, industry practices, and technological implementations, demonstrating its broad relevance and practical value in professional settings."""
             else:
                 newline = "\n"
-                response = f"""**Definition:** {topic} is a specialized area of study that encompasses specific principles, methodologies, and applications within its domain. Understanding this concept requires systematic examination of its fundamental components.{newline}{newline}**Key Characteristics:** The field is characterized by established theoretical frameworks, empirical methodologies, and practical applications. Key aspects include systematic approaches to problem-solving, evidence-based practices, and continuous evolution through research and development.{newline}{newline}**Examples:** Applications of {topic.lower()} can be found across various domains, including academic research, industry practices, and technological implementations. Specific examples demonstrate the practical value and broad applicability of this knowledge.{newline}{newline}**Significance:** Understanding {topic.lower()} is essential for developing expertise in related areas and contributes to broader knowledge advancement, making it valuable for both students and professionals."""
-        
+                response = f"""**Definition:** {topic} is a specialized area of study that encompasses specific principles, methodologies, and applications within its domain. Understanding this concept requires systematic examination of its fundamental components.
+                
+**Key Characteristics:** The field is characterized by established theoretical frameworks, empirical methodologies, and practical applications. Key aspects include systematic approaches to problem-solving, evidence-based practices, and continuous evolution through research and development.
+                
+**Examples:** Applications of {topic.lower()} can be found across various domains, including academic research, industry practices, and technological implementations. Specific examples demonstrate the practical value and broad applicability of this knowledge.
+                
+**Significance:** Understanding {topic.lower()} is essential for developing expertise in related areas and contributes to broader knowledge advancement, making it valuable for both students and professionals."""
         return response
 
     def _format_academic_response(self, content_dict, mode, target_words, topic):
-        """Format the response based on mode and target word count with IMPROVED word count targeting."""
-        
+        """
+        Format the response based on mode and target word count.
+        This method is now primarily used by the template system in _generate_enhanced_custom_response.
+        """
         newline = "\n"
         
-        if mode.lower() == "learning":
-            response = f"""**Academic Explanation: {topic}**
+        # Define templates for different word counts
+        templates = {
+            100: { # 2 marks
+                'structure': [("Definition", 40), ("Key Features", 35), ("Examples", 25)],
+                'total_words': 100
+            },
+            250: { # 5 marks
+                'structure': [("Definition", 60), ("Characteristics", 80), ("Examples", 70), ("Applications", 40)],
+                'total_words': 250
+            },
+            500: { # 10 marks
+                'structure': [("Definition", 80), ("Characteristics", 120), ("Examples", 100), ("Applications", 100), ("Significance", 100)],
+                'total_words': 500
+            }
+        }
 
+        if mode.lower() == "learning":
+            # Learning mode still uses a more free-form comprehensive structure
+            response = f"""**Academic Explanation: {topic}**
 **Definition:**
 {content_dict['definition']}
 
 **Key Characteristics:**
-{newline.join(f"• {char}" for char in content_dict['characteristics'][:3])}
+{newline.join(f"â€¢ {char}" for char in content_dict['characteristics'][:3])}
 
 **Practical Examples:**
-{newline.join(f"• {ex}" for ex in content_dict['examples'][:3])}
+{newline.join(f"â€¢ {ex}" for ex in content_dict['examples'][:3])}
 
 **Applications:**
-{newline.join(f"• {app}" for app in content_dict['applications'][:3])}
+{newline.join(f"â€¢ {app}" for app in content_dict['applications'][:3])}
 
 **Conclusion:**
 Understanding {topic.lower()} is essential for advancing knowledge in computer science and developing practical solutions that address real-world challenges. This field continues to evolve with new research and technological developments."""
-        else:
-            # IMPROVED: Better word count targeting for question mode
-            if not target_words:
-                target_words = 100
+        else: # Question mode, use precise templates
+            template = templates.get(target_words, templates[100]) # Default to 100 words if target_words is not 100, 250, or 500
             
-            if target_words <= 100:
-                # For 2 marks (100 words) - keep it concise
-                response = f"**Definition:** {content_dict['definition'][:120]}... **Key Characteristics:** {content_dict['characteristics'][0][:80]}... **Examples:** {content_dict['examples'][0][:60]}..."
+            response_parts = []
+            for section_name, word_allocation in template['structure']:
+                section_content = ""
+                if section_name == "Definition":
+                    section_content = content_dict['definition']
+                elif section_name == "Key Features" or section_name == "Characteristics":
+                    section_content = ". ".join(content_dict['characteristics'])
+                elif section_name == "Examples":
+                    section_content = ". ".join(content_dict['examples'])
+                elif section_name == "Applications":
+                    section_content = ". ".join(content_dict['applications'])
+                elif section_name == "Significance":
+                    section_content = f"{topic} plays a crucial role in modern technology and continues to drive innovation across multiple industries. Understanding these concepts is essential for professionals in computer science and related fields."
                 
-                # Expand to reach closer to 100 words
-                current_words = len(response.split())
-                if current_words < 80:
-                    response += f" {content_dict['characteristics'][1][:50]}..."
+                # Truncate/expand section content to fit word allocation
+                section_words = section_content.split()
+                if len(section_words) > word_allocation:
+                    section_content = " ".join(section_words[:word_allocation])
+                    if not section_content.endswith('.'):
+                        section_content += '.'
+                elif len(section_words) < word_allocation:
+                    # Simple expansion for now, can be more sophisticated
+                    filler_words_needed = word_allocation - len(section_words)
+                    if filler_words_needed > 0:
+                        filler = " This concept is fundamental and has wide-ranging implications. Further details are crucial for a complete understanding."
+                        section_content += " " + " ".join(filler.split()[:filler_words_needed])
+
+                response_parts.append(f"**{section_name}:** {section_content}")
             
-            elif target_words <= 250:
-                # For 5 marks (250 words) - balanced detail
-                response = f"**Definition:** {content_dict['definition']}"
-                response += f"{newline}{newline}**Key Characteristics:** "
-                response += f"{newline.join(f'• {char}' for char in content_dict['characteristics'][:2])}"
-                response += f"{newline}{newline}**Examples:** "
-                response += f"{newline.join(f'• {ex}' for ex in content_dict['examples'][:2])}"
-                
-                # Check word count and expand if needed
-                current_words = len(response.split())
-                if current_words < target_words * 0.8:  # If under 80% of target
-                    response += f"{newline}{newline}**Applications:** "
-                    response += f"{newline.join(f'• {app}' for app in content_dict['applications'][:2])}"
-                    
-                    # Add more content if still short
-                    current_words = len(response.split())
-                    if current_words < target_words * 0.9:
-                        response += f" {content_dict['characteristics'][2]} This demonstrates the comprehensive nature of the field and its practical significance in modern technology applications."
-            
-            else:  # 500 words
-                # For 10 marks (500 words) - comprehensive coverage
-                response = f"""**Definition:** {content_dict['definition']}
-
-**Key Characteristics:**
-{newline.join(f"• {char}" for char in content_dict['characteristics'][:4])}
-
-**Practical Examples:**
-{newline.join(f"• {ex}" for ex in content_dict['examples'][:4])}
-
-**Applications:**
-{newline.join(f"• {app}" for app in content_dict['applications'][:3])}
-
-**Significance:**
-{topic} plays a crucial role in modern technology and continues to drive innovation across multiple industries. Understanding these concepts is essential for professionals in computer science and related fields."""
-                
-                # Expand further if needed for 500 words
-                current_words = len(response.split())
-                if current_words < target_words * 0.8:
-                    response += f"{newline}{newline}**Advanced Concepts:** The field encompasses both theoretical foundations and practical implementations. Research continues to advance our understanding and develop new methodologies. Contemporary developments include optimization techniques, scalability improvements, and integration with emerging technologies. The interdisciplinary nature contributes to its broad applicability across various domains and industries."
-                    
-                    # Final expansion if still short
-                    current_words = len(response.split())
-                    if current_words < target_words * 0.9:
-                        response += f" Future developments promise even greater capabilities and applications, making this an exciting area for continued study and professional development."
+            response = newline.join(response_parts)
         
         return response
 
@@ -1539,12 +1519,13 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
         current_words = len(answer.split())
         
         # IMPROVED: More aggressive expansion for question mode
+        # This is for the LLM output, which is capped at 200 words.
+        # The custom output will handle the full target.
         if mode.lower() == "question" and target_words:
-            if current_words < target_words * 0.6:  # If significantly under target
-                return self._generate_expanded_response(query, mode, None, target_words, [])
-            elif current_words < target_words * 0.8:  # If moderately under target
+            # If LLM output is too short for its own cap (200 words)
+            if current_words < 150: # If significantly under 200 words
                 # Add targeted expansion
-                expansion = self._get_targeted_expansion(query, target_words - current_words)
+                expansion = self._get_targeted_expansion(query, 200 - current_words)
                 answer += f" {expansion}"
         
         # Add academic structure if missing
@@ -1577,7 +1558,7 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
         elif any(term in query_lower for term in ['machine learning', 'ml']):
             expansions = [
                 "Machine learning algorithms are categorized into supervised, unsupervised, and reinforcement learning.",
-                "Performance evaluation involves metrics such as accuracy, precision, recall, and F1-score.",
+                "Performance evaluation involves metrics suchs as accuracy, precision, recall, and F1-score.",
                 "Contemporary applications span healthcare diagnostics, financial modeling, and autonomous systems.",
                 "The field encompasses statistical methods, neural networks, and deep learning architectures.",
                 "Training data quality and feature engineering are crucial for model effectiveness."
@@ -1664,24 +1645,19 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
             answer = answer.rstrip() + '.'
         
         # IMPROVED: Stricter word count enforcement for question mode
+        # This is for the LLM output, which is capped at 200 words.
+        # The custom output will handle the full target.
         if mode.lower() == "question" and target_words:
             current_words = len(answer.split())
-            variance = abs(current_words - target_words) / target_words
+            # LLM output is capped at 200 words, so its target is effectively 200
+            llm_cap = 200 
             
-            if variance > 0.3:  # If variance is more than 30%
-                if current_words < target_words:
-                    # Expand more aggressively
-                    words_needed = target_words - current_words
-                    expansion = self._get_targeted_expansion(query, words_needed)
-                    if expansion:
-                        answer += f" {expansion}"
-                else:
-                    # Truncate more precisely
-                    words = answer.split()[:target_words]
-                    answer = ' '.join(words)
-                    if not answer.endswith('.'):
-                        answer += '.'
-        
+            if current_words > llm_cap * 1.1: # If LLM output exceeds its cap by more than 10%
+                words = answer.split()[:llm_cap]
+                answer = ' '.join(words)
+                if not answer.endswith('.'):
+                    answer += '.'
+            
         # Minimum length check for learning mode
         if mode.lower() == "learning" and len(answer.split()) < 80:
             answer += "\n\nThis overview provides essential foundational knowledge for understanding the topic. Further exploration through academic literature and practical experience will deepen comprehension and enable advanced application of these concepts."
@@ -1728,8 +1704,7 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
         ranked_chunks = sorted(context_chunks, key=score_chunk, reverse=True)
         # Only return chunks with positive scores
         return [chunk for chunk in ranked_chunks if score_chunk(chunk) > 0]
-
-    
+        
     def _write_logs(self, logs):
         """Print logs to standard output."""
         # As per requirements, avoiding file-based logging at runtime.
@@ -1824,7 +1799,7 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
 
     def generate_dual_response(self, query, mode="learning", marks=None, temperature=0.7, context_chunks=None):
         """
-        IMPROVED: Generate both LLM and enhanced custom academic responses independently.
+        IMPROVED: Generate both LLM and enhanced custom academic responses independently using parallel execution.
         
         Args:
             query: The user's question/prompt
@@ -1847,51 +1822,70 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
         logs.append(f"Temperature: {temperature}")
         logs.append(f"Context chunks: {len(context_chunks)}")
         
-        # 1. Generate from LLM (DialoGPT-medium)
-        llm_start_time = datetime.utcnow()
-        logs.append(f"--- Starting LLM Generation ---")
+        # Determine max_new_tokens for LLM based on load balancing strategy
+        # LLM output is capped at 100-200 words max
+        llm_max_new_tokens = 200 # Max for LLM output
         
-        try:
-            llm_answer = self.generate_answer(
+        # Use ThreadPoolExecutor for parallel generation
+        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+            # Future for LLM generation
+            llm_future = executor.submit(
+                self.generate_answer,
                 query=query,
                 mode=mode,
                 marks=marks,
                 temperature=temperature,
                 context_chunks=context_chunks,
                 rerank_context=True,
-                return_citations=True
+                return_citations=True,
+                max_new_tokens=llm_max_new_tokens # Pass the capped max_new_tokens for LLM
             )
-            llm_generation_time = (datetime.utcnow() - llm_start_time).total_seconds()
-            llm_word_count = len(llm_answer.split())
-            logs.append(f"LLM generation successful: {llm_word_count} words in {llm_generation_time:.2f}s")
             
-        except Exception as e:
-            logs.append(f"LLM generation failed: {repr(e)}")
-            # Use fallback for LLM
-            llm_answer = self._generate_expanded_response(query, mode, marks, target_words, context_chunks)
-            llm_generation_time = (datetime.utcnow() - llm_start_time).total_seconds()
-            llm_word_count = len(llm_answer.split())
-            logs.append(f"LLM fallback used: {llm_word_count} words in {llm_generation_time:.2f}s")
-        
-        # 2. IMPROVED: Generate from enhanced custom academic generator
-        custom_start_time = datetime.utcnow()
-        logs.append(f"--- Starting Enhanced Custom Academic Generation ---")
-        
-        try:
-            # Enhanced keyword detection and topic-specific generation
-            custom_answer = self._generate_enhanced_custom_response(query, mode, marks, target_words, context_chunks)
+            # Future for custom academic generation (handles full word count)
+            custom_future = executor.submit(
+                self._generate_enhanced_custom_response,
+                query=query,
+                mode=mode,
+                marks=marks,
+                target_words=target_words, # Pass full target words for custom
+                context_chunks=context_chunks
+            )
             
-            custom_generation_time = (datetime.utcnow() - custom_start_time).total_seconds()
-            custom_word_count = len(custom_answer.split())
-            logs.append(f"Enhanced custom generation successful: {custom_word_count} words in {custom_generation_time:.2f}s")
+            llm_answer = ""
+            llm_generation_time = 0.0
+            llm_word_count = 0
             
-        except Exception as e:
-            logs.append(f"Custom generation failed: {repr(e)}")
-            # Fallback for custom generator
-            custom_answer = self._generate_expanded_response(query, mode, marks, target_words, context_chunks)
-            custom_generation_time = (datetime.utcnow() - custom_start_time).total_seconds()
-            custom_word_count = len(custom_answer.split())
-            logs.append(f"Custom fallback used: {custom_word_count} words in {custom_generation_time:.2f}s")
+            custom_answer = ""
+            custom_generation_time = 0.0
+            custom_word_count = 0
+            
+            try:
+                llm_start_time = datetime.utcnow()
+                logs.append(f"--- Starting LLM Generation (Parallel) ---")
+                llm_answer = llm_future.result()
+                llm_generation_time = (datetime.utcnow() - llm_start_time).total_seconds()
+                llm_word_count = len(llm_answer.split())
+                logs.append(f"LLM generation successful: {llm_word_count} words in {llm_generation_time:.2f}s")
+            except Exception as e:
+                logs.append(f"LLM generation failed: {repr(e)}")
+                llm_answer = self._generate_expanded_response(query, mode, marks, llm_max_new_tokens, context_chunks)
+                llm_generation_time = (datetime.utcnow() - llm_start_time).total_seconds()
+                llm_word_count = len(llm_answer.split())
+                logs.append(f"LLM fallback used: {llm_word_count} words in {llm_generation_time:.2f}s")
+            
+            try:
+                custom_start_time = datetime.utcnow()
+                logs.append(f"--- Starting Enhanced Custom Academic Generation (Parallel) ---")
+                custom_answer = custom_future.result()
+                custom_generation_time = (datetime.utcnow() - custom_start_time).total_seconds()
+                custom_word_count = len(custom_answer.split())
+                logs.append(f"Enhanced custom generation successful: {custom_word_count} words in {custom_generation_time:.2f}s")
+            except Exception as e:
+                logs.append(f"Custom generation failed: {repr(e)}")
+                custom_answer = self._generate_expanded_response(query, mode, marks, target_words, context_chunks)
+                custom_generation_time = (datetime.utcnow() - custom_start_time).total_seconds()
+                custom_word_count = len(custom_answer.split())
+                logs.append(f"Custom fallback used: {custom_word_count} words in {custom_generation_time:.2f}s")
         
         total_time = (datetime.utcnow() - start_time).total_seconds()
         logs.append(f"=== ENHANCED DUAL GENERATION COMPLETE ===")
@@ -1930,6 +1924,7 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
     def _generate_enhanced_custom_response(self, query, mode, marks, target_words, context_chunks):
         """
         ENHANCED: Generate custom academic response with improved word count targeting and query specificity.
+        Uses a template-based system for guaranteed word counts.
         """
         query_lower = query.lower()
         
@@ -2004,47 +1999,39 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
     def _apply_precise_word_targeting(self, response, target_words, mode, query):
         """Apply precise word count targeting to meet exact requirements."""
         
-        if not target_words:
+        if not target_words: # If no specific target (e.g., learning mode)
             return response
         
         current_words = len(response.split())
-        variance = abs(current_words - target_words) / target_words
         
-        # If variance is acceptable (within 15%), return as is
-        if variance <= 0.15:
+        # If within a small acceptable range (e.g., 5% tolerance)
+        if abs(current_words - target_words) / target_words <= 0.05:
             return response
         
         # If significantly under target, expand
-        if current_words < target_words * 0.8:
+        if current_words < target_words:
             words_needed = target_words - current_words
             expansion = self._get_targeted_expansion(query, words_needed)
             if expansion:
                 response += f" {expansion}"
+            
+            # After expansion, re-check and potentially add generic filler
+            current_words = len(response.split())
+            if current_words < target_words:
+                remaining = target_words - current_words
+                if remaining > 5: # Only add if meaningful amount
+                    filler = " This comprehensive understanding enables effective application in professional and academic contexts. Further exploration is encouraged for deeper insights."
+                    filler_words = filler.split()[:remaining]
+                    response += f" {' '.join(filler_words)}"
         
         # If over target, truncate precisely
-        elif current_words > target_words * 1.1:
+        current_words = len(response.split()) # Re-calculate after potential expansion
+        if current_words > target_words:
             words = response.split()[:target_words]
             response = ' '.join(words)
             # Ensure proper ending
             if not response.endswith('.'):
                 response += '.'
-        
-        # Final fine-tuning to get as close as possible to target
-        final_words = len(response.split())
-        if abs(final_words - target_words) > target_words * 0.1:  # If still off by more than 10%
-            if final_words < target_words:
-                # Add filler content to reach target
-                remaining = target_words - final_words
-                if remaining > 5:
-                    filler = "This comprehensive understanding enables effective application in professional and academic contexts."
-                    filler_words = filler.split()[:remaining]
-                    response += f" {' '.join(filler_words)}"
-            else:
-                # Precise truncation
-                words = response.split()[:target_words]
-                response = ' '.join(words)
-                if not response.endswith('.'):
-                    response += '.'
         
         return response
 
@@ -2089,7 +2076,7 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
                 "O(1): Constant time operations like array access, hash table lookup",
                 "O(log n): Binary search, balanced tree operations",
                 "O(n): Linear search, single array traversal",
-                "O(n²): Bubble sort, nested loop algorithms"
+                "O(nÂ²): Bubble sort, nested loop algorithms"
             ],
             'applications': [
                 "Algorithm selection: Choosing optimal algorithms for specific problems",
@@ -2161,13 +2148,13 @@ Understanding {topic.lower()} is essential for advancing knowledge in computer s
                 "Stable sorting preserving relative order of equal elements",
                 "In-place sorting minimizing additional memory requirements",
                 "Adaptive algorithms performing better on partially sorted data",
-                "Time complexity ranging from O(n log n) to O(n²) depending on algorithm"
+                "Time complexity ranging from O(n log n) to O(nÂ²) depending on algorithm"
             ],
             'examples': [
                 "Quick Sort: Divide-and-conquer with average O(n log n) complexity",
                 "Merge Sort: Stable divide-and-conquer with guaranteed O(n log n)",
                 "Heap Sort: Selection-based sorting using binary heap data structure",
-                "Bubble Sort: Simple comparison-based algorithm with O(n²) complexity"
+                "Bubble Sort: Simple comparison-based algorithm with O(nÂ²) complexity"
             ],
             'applications': [
                 "Database systems: Query optimization, index maintenance, result ordering",
@@ -2265,13 +2252,28 @@ if __name__ == "__main__":
                 domain, topics, domain_confidence = model.detect_domain_and_topic(query)
                 print(f"Domain: {domain}, Topics: {topics}")
                 
-                answer = model.generate_answer(query, mode=mode, marks=marks)
-                word_count = len(answer.split())
-                print(f"✓ Success: {word_count} words")
-                print(f"Preview: {answer[:200]}...")
+                # Use generate_dual_response for testing both outputs
+                dual_response = model.generate_dual_response(query, mode=mode, marks=marks)
+                
+                llm_answer = dual_response['llm_output']
+                custom_answer = dual_response['custom_output']
+                
+                llm_word_count = len(llm_answer.split())
+                custom_word_count = len(custom_answer.split())
+                
+                print(f"âœ“ LLM Output Success: {llm_word_count} words")
+                print(f"Preview LLM: {llm_answer[:200]}...")
+                
+                print(f"âœ“ Custom Output Success: {custom_word_count} words")
+                print(f"Preview Custom: {custom_answer[:200]}...")
+                
+                if mode == "question" and marks is not None:
+                    target_wc = model._infer_target_word_count(marks)
+                    print(f"Target words for custom: {target_wc}")
+                    print(f"Custom word count accuracy: {abs(custom_word_count - target_wc) / target_wc * 100:.2f}% deviation")
+                
             except Exception as e:
-                print(f"✗ Failed: {e}")
-    
+                print(f"âœ— Failed: {e}")
     except Exception as ex:
         print(f"FAIL: {ex}")
         import traceback
