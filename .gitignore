@@ -1,0 +1,23 @@
+# Large Files (excluded from git due to size limits)
+data/*.txt
+*.pt
+models/*/model.pt
+fast_cse_model*/model.pt
+
+# Cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment files
+.env
+
+# Logs
+*.log
+
+# Database files
+*.db
+
+# Temporary files
+tmp/
+temp/
