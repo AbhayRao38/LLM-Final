@@ -1,3 +1,30 @@
+# Quill-AI (LLM)
+
+This repository contains Quill-AI — a small local assistant that combines semantic retrieval (FAISS + sentence-transformers), a lightweight local LLM wrapper, and web-enhanced retrieval for retrieval-augmented generation (RAG).
+
+What's included
+- Retrieval pipeline using FAISS and sentence-transformers
+- Web scraper and web-enhanced retrieval layer
+- Dual-response generator (LLM + custom generator) with merge/evaluation
+- Dockerfile for deployment (uses uvicorn to serve `api_server:app`)
+
+Quick start (local)
+1. Create a virtualenv and install dependencies:
+```powershell
+python -m venv .venv; .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+2. Run the end-to-end example:
+```powershell
+python src\run_end_to_end.py
+```
+
+Deploying to Hugging Face Spaces
+- This repo contains a `Dockerfile` and can be published to a Space that uses Docker.
+- See `SPACE_DEPLOY.md` for step-by-step instructions to push the repo to a Space and handle large files with Git LFS.
+
+Notes
+- Large binary/index files and textbook PDFs were removed from the pushed branch to make the Space upload possible; a backup branch `backup/prep-spaces-publish` exists locally if you need to recover them.
 # Complete LLM Project - Fast CSE Model# SimpleGPT: An Efficient Small-Scale Language Model for Computer Science Education
 
 
