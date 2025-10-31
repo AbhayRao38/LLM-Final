@@ -1,3 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data, models, caches
+/checkpoints/
+/data/
+/models/
+/fast_cse_model_*/
+/training_output/
+/training_logs/
+/tmp/
+/hf_cache/
+/__pycache__/
+
+# Local env files
+.env
+secrets.env
+
+# Logs
+*.log
+
+# Notebook outputs
+*.nbformat
+
+# Windows specific
+desktop.ini
 # Large Files (excluded from git due to size limits)
 data/*.txt
 *.pt

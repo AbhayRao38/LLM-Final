@@ -48,4 +48,6 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:7860/health || exit 1
 
 # Start the application
-CMD ["uvicorn", "api_server:app", "--host", "0.0.0.0", "--port", "7860", "--workers", "1"]
+# Use a PORT environment variable if provided (useful for hosting platforms); default to 7860
+# Note: shell form is used to allow environment variable expansion.
+CMD uvicorn api_server:app --host 0.0.0.0 --port ${PORT:-7860} --workers 1
